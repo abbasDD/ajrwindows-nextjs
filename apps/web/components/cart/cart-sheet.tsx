@@ -13,17 +13,12 @@ import {
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useRouter } from "next/navigation";
-import { calculateOrderTotals } from "@/lib/cart-calculation";
 
 export const CartSheet = () => {
   const router = useRouter();
   const { items, removeItem, clearCart, updateQuantity, getTotalPrice } =
     useCartStore();
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0);
-  const { finalTotal, subtotal, productDiscountTotal } = calculateOrderTotals(
-    items,
-    null,
-  );
 
   return (
     <Sheet>

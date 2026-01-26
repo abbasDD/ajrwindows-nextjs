@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useCartStore } from "@/store/use-cart-store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -103,9 +102,12 @@ const ProductDetails = ({
 
           <div className="flex items-baseline gap-4">
             <span className="text-4xl font-semibold text-secondary">
-              ${initialProduct.discounted_price || initialProduct.price}
+              $
+              {initialProduct.discounted_price > 0
+                ? initialProduct.discounted_price
+                : initialProduct.price}
             </span>
-            {initialProduct.discounted_price && (
+            {initialProduct.discounted_price > 0 && (
               <span className="text-xl text-white/30 line-through">
                 ${initialProduct.price}
               </span>
@@ -124,14 +126,14 @@ const ProductDetails = ({
             >
               <ShoppingBasket className="mr-2" size={20} /> Add to Cart
             </Button>
-            <Link href="/customdoor" className="flex-1">
-              <Button
-                variant="outline"
-                className="w-full h-14 rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10"
-              >
-                Customize
-              </Button>
-            </Link>
+            {/* <Link href="/customdoor" className="flex-1"> */}
+            <Button
+              variant="outline"
+              className="flex-1 h-14 rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10"
+            >
+              Customize
+            </Button>
+            {/* </Link> */}
           </div>
         </div>
       </div>
