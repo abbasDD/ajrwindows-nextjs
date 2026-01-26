@@ -1,0 +1,29 @@
+# Stage 1: Install + Build
+FROM oven/bun:1.1-alpine AS builder
+WORKDIR /build
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+COPY . .
+
+RUN bun install 
+
+RUN bunx turbo run build 
+
+
+FROM oven/bun:1.1-alpine
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Copy standalone server output
+COPY --from=builder /build/apps/web/.next/standalone ./
+
+# Copy static assets
+COPY --from=builder /build/apps/web/.next/static ./apps/web/.next/static
+COPY --from=builder /build/apps/web/public ./apps/web/public
+
+EXPOSE 3000
+
+CMD ["bun", "apps/web/server.js"]

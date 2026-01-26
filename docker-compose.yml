@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/DockerFile
+    image: sohail404/ajr-window:frontend-v2
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
