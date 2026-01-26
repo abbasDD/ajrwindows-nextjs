@@ -1,12 +1,11 @@
-import PdfViewer from "@/components/catalog/pdf-viewer";
+"use client";
 import LayoutXSmall from "@/components/layout/layout-x-small";
 import PublicLayout from "@/components/layout/public-layout";
-import { Metadata } from "next";
+import dynamic from "next/dynamic";
+const PdfViewer = dynamic(() => import("@/components/catalog/pdf-viewer"), {
+  ssr: false, // <- critical
+});
 
-export const metadata: Metadata = {
-  title: "Catalog - AJR Windows",
-  description: "Catalog page of AJR Windows",
-};
 const CatalogPage = () => {
   return (
     <PublicLayout>

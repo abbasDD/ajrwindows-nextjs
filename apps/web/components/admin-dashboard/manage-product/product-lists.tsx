@@ -199,7 +199,7 @@ export default function ProductList() {
                       className="hover:text-blue-600"
                       onClick={() =>
                         router.push(
-                          `/admin/dashboard/manage-product/create?id=${product.id}`,
+                          `/admin/dashboard/manage-product/${product.id}`,
                         )
                       }
                     >

@@ -2,14 +2,18 @@ import AdminSectionCard from "@/components/admin-dashboard/admin-section-card";
 import CreateProductForm from "@/components/admin-dashboard/manage-product/create-product-client";
 import { Metadata } from "next";
 
+interface Props {
+  params: Promise<{ id: string }>;
+}
 export const metadata: Metadata = {
-  title: "Create Product - Admin Dashboard",
+  title: "Update Product - Admin Dashboard",
   description: "Admin Dashboard page",
 };
-const CreateProductPage = async () => {
+const CreateProductPage = async ({ params }: Props) => {
+  const { id } = await params;
   return (
-    <AdminSectionCard title={"Create New Product"}>
-      <CreateProductForm />
+    <AdminSectionCard title={"Edit Product"}>
+      <CreateProductForm productId={id} />
     </AdminSectionCard>
   );
 };

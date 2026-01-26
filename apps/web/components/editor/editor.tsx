@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
-import ReactQuill from "react-quill-new";
+import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
+const ReactQuill = dynamic(() => import("react-quill-new"), {
+  ssr: false,
+});
 
 type Props = {
   value: string;

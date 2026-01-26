@@ -92,7 +92,7 @@ export default function FAQFormModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:min-w-[500px]">
         <DialogHeader>
           <DialogTitle className="text-[#D4C385]">
             {faq_id ? "Edit FAQ" : "Add New FAQ"}

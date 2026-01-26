@@ -59,7 +59,7 @@ const ProductFAQManager = ({ productId }: { productId: string }) => {
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="min-w-5xl  h-[60vh] flex flex-col gap-6 ">
+        <DialogContent className="min-w-auto lg:min-w-5xl  h-[60vh] flex flex-col gap-6 ">
           <div className="border-b  flex items-center justify-between  py-6">
             <div className="space-y-1">
               <DialogTitle className="text-2xl font-bold text-[#D4C385]">
@@ -138,7 +138,7 @@ const ProductFAQManager = ({ productId }: { productId: string }) => {
                     <TableCell className="font-medium text-[#D4C385] align-top w-[30%]">
                       {faq.title}
                     </TableCell>
-                    <TableCell className="text-gray-400 align-top max-w-md">
+                    <TableCell className="text-gray-400 align-top ">
                       {faq.description}
                     </TableCell>
                     <TableCell className="text-right align-top">
