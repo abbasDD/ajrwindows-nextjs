@@ -321,7 +321,7 @@ export function PromoCodeDialog({ initialData }: { initialData?: any }) {
               >
                 {loading ? (
                   <LoaderCircle className="animate-spin" />
-                ) : (
+                ) : initialData ? null : (
                   <Plus className="mr-2" />
                 )}
                 {initialData ? "Update" : "Add"} Promo Code

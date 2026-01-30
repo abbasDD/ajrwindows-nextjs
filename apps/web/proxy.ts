@@ -17,14 +17,27 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const pathname = request.nextUrl.pathname;
-
   const isAdminDashboard = pathname.startsWith(adminProtectedRoute);
+
+  if (isAdminDashboard) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    // check if user has admin role
+    const userData = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    if (userData.data?.role !== "admin") {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+  }
+
+  // Check user-protected routes
   const isUserProtectedRoute = protectedUserRoutes.some((route) =>
     pathname.startsWith(route),
   );
-  if (isAdminDashboard && !user) {
-    return NextResponse.redirect(new URL("/admin", request.url));
-  }
   if (isUserProtectedRoute && !user) {
     return NextResponse.redirect(new URL("/", request.url));
   }

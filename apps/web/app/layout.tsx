@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 import type { Metadata } from "next";
 import "./globals.css";
+import AuthInitializer from "@/components/auth/auth-initilizer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-primary ${inter.className}`}>
         <NextTopLoader color="#d4c780" height={2} showSpinner={false} />
-        <main className="overflow-x-hidden">{children}</main>
+        <main className="overflow-x-hidden">
+          <AuthInitializer />
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>

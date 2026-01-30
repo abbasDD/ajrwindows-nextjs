@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, LogOut } from "lucide-react";
 import AuthModal from "../auth/auth.modal";
 import LayoutXSmall from "./layout-x-small";
@@ -93,16 +93,6 @@ const Navbar = () => {
   const { user, setUser } = useUserStore();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? (null as any));
-    });
-
-    return () => subscription.unsubscribe();
-  }, [setUser]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

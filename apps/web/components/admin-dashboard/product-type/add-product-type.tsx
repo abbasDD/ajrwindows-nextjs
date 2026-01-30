@@ -196,7 +196,7 @@ const AddProductType = ({ open, setOpen, initialData }: Props) => {
               >
                 {loading ? (
                   <LoaderCircle className="animate-spin mr-2" />
-                ) : (
+                ) : initialData ? null : (
                   <Plus className="mr-2" />
                 )}
                 {initialData ? "Update" : "Add"} Product Type

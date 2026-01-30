@@ -138,7 +138,13 @@
     @apply bg-background text-foreground;
   }
 }
-
+.canvas-grid {
+  background-color: var(--primary); /* bg-primary */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
 .custom_input_fields {
   @apply h-12 bg-white/5 border-white/10 focus-visible:border-[#D4C385]/50
     focus-visible:ring-1 focus-visible:ring-[#D4C385]/20 transition-all;
