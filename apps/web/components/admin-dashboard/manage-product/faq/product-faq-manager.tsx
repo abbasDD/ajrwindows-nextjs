@@ -52,7 +52,7 @@ const ProductFAQManager = ({ productId }: { productId: string }) => {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="gap-2 border-[#D4C385] text-[#D4C385] hover:bg-[#D4C385] hover:text-black transition-all"
+            className="gap-2 max-md:text-sm border-[#D4C385] text-[#D4C385] hover:bg-[#D4C385] hover:text-black transition-all"
           >
             <MessageSquarePlus className="h-4 w-4" />
             Manage FAQs

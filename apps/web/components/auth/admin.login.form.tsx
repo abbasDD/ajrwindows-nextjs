@@ -77,7 +77,7 @@ const AdminLoginForm = () => {
   };
   return (
     <div className="w-full px-8 h-full flex flex-col items-center justify-center gap-6">
-      <Image src="/logo.png" alt="logo" width={120} height={100} />
+      <Image src="/logo.png" alt="logo" width={100} height={100} />
       <h2 className="text-2xl">Admin Log In</h2>
       <p>Welcome back! Please enter your details.</p>
       <Form {...form}>

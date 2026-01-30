@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 const Settings = () => {
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Settings Page</h1>
       <AdminSectionCard title="Settings">
         <Tabs defaultValue="personal-details">
@@ -26,7 +26,7 @@ const Settings = () => {
           </TabsContent>
         </Tabs>
       </AdminSectionCard>
-    </>
+    </div>
   );
 };
 

@@ -73,12 +73,12 @@ const CategoryBrowser = () => {
     <section className="w-full mt-6 bg-card/40 backdrop-blur-md rounded-3xl! p-6 sm:p-12 border border-white/5">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
         <div>
-          <h2 className="text-3xl font-bold text-white tracking-tight">
+          <h2 className="text-xl md:text-2xl  font-bold text-white tracking-tight">
             {activeTab === "all"
               ? "All Collections"
               : categories?.find((c) => c.id === activeTab)?.category}
           </h2>
-          <p className="text-white/40 text-sm mt-1">
+          <p className="text-white/40 text-base mt-1">
             Showing {filteredProducts.length} items
           </p>
         </div>

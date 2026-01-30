@@ -10,26 +10,53 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, LoaderCircle } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { createClient } from "@/lib/supabase/client";
 
 const ForgotPasswordForm = ({
   handleChangeType,
 }: {
   handleChangeType: (type: any) => void;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const supabase = createClient();
   const form = useForm({
     defaultValues: {
       email: "",
     },
   });
-  const handleSubmit = (values: { email: string }) => {};
+
+  const handleSubmit = async (values: { email: string }) => {
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(
+        values.email,
+        {
+          redirectTo: `${window.location.origin}/auth/update-password`,
+        },
+      );
+
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success("Password reset link sent! Check your email.");
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+      form.reset();
+    }
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <h1 className="text-xl sm:text-4xl pb-2 font-semibold">
+        <h1 className="text-xl md:text-2xl xl:text-3xl pb-2 font-semibold">
           Forgot Password
         </h1>
-        <p className="sm:text-xl text-white/80 pb-8">
+        <p className="text-base xl:text-lg text-white/80 pb-8">
           Enter your registered email to receive OTP.
         </p>
         <FormField
@@ -37,7 +64,7 @@ const ForgotPasswordForm = ({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="sm:text-xl text-white/80">EMAIL</FormLabel>
+              <FormLabel className="text-base text-white/80">EMAIL</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your email"
@@ -54,15 +81,17 @@ const ForgotPasswordForm = ({
 
         <Button
           variant={"secondary"}
-          className="w-full py-7 text-xl"
+          className="w-full py-6 text-lg"
           size={"lg"}
+          disabled={isLoading}
         >
+          {isLoading && <LoaderCircle className="animate-spin" />}
           Reset Password
         </Button>
 
         <Button
           onClick={() => handleChangeType("login")}
-          className="text-secondary text-xl group"
+          className="text-secondary text-base group"
           variant={"link"}
         >
           <ArrowLeft className="group-hover:-translate-x-1.5 transition-all ease-in-out" />

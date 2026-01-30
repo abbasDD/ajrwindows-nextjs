@@ -1,4 +1,5 @@
 "use client";
+
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -17,11 +18,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { mutation } from "@/services/mutation.service";
+import { Eye, EyeOff } from "lucide-react";
 
-interface RegisterFormProps {
-  handleChangeType: (type: any) => void;
-}
-const RegisterForm = ({ handleChangeType }: RegisterFormProps) => {
+const RegisterForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const form = useForm<RegisterAuthType>({
     defaultValues: {
       username: "",
@@ -33,31 +36,30 @@ const RegisterForm = ({ handleChangeType }: RegisterFormProps) => {
     resolver: zodResolver(registerSchema),
     mode: "onSubmit",
   });
+
   const supabase = createClient();
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (values: RegisterAuthType) => {
     setLoading(true);
     const toastId = toast.loading("Please wait ...");
     try {
-      const { data: user, error } = await supabase.auth.signUp({
+      const { data: authData, error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
       });
-      console.log(user);
-      if (error) {
-        toast.dismiss(toastId);
-        throw new Error(error.message);
-      }
-      const data = {
-        id: user?.user?.id,
+
+      if (error) throw new Error(error.message);
+
+      const userData = {
+        id: authData?.user?.id,
         username: values.username,
         phone: values.phone,
         role: "user",
       };
-      await mutation.insertOne("users", data);
+
+      await mutation.insertOne("users", userData);
+
       form.reset();
-      toast.dismiss(toastId);
       toast.success("Register successful", {
         description: (
           <p className="italic">
@@ -66,32 +68,33 @@ const RegisterForm = ({ handleChangeType }: RegisterFormProps) => {
         ),
       });
     } catch (e) {
-      console.log(e);
       toast.error(e instanceof Error ? e.message : "Something went wrong");
     } finally {
       setLoading(false);
       toast.dismiss(toastId);
     }
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <h1 className="text-xl sm:text-4xl pb-8 font-semibold">Register</h1>
+        <h1 className="text-xl md:text-2xl xl:text-3xl pb-8 font-semibold">
+          Register
+        </h1>
 
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="sm:text-xl text-white/80">
+              <FormLabel className="sm:text-base text-white/80">
                 USERNAME
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your username"
                   {...field}
-                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-xl!
-                  rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
+                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-base! rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
                   type="text"
                 />
               </FormControl>
@@ -99,18 +102,20 @@ const RegisterForm = ({ handleChangeType }: RegisterFormProps) => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="sm:text-xl text-white/80">EMAIL</FormLabel>
+              <FormLabel className="sm:text-base text-white/80">
+                EMAIL
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your email"
                   {...field}
-                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-xl!
-                  rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
+                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-base! rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
                   type="email"
                 />
               </FormControl>
@@ -124,10 +129,12 @@ const RegisterForm = ({ handleChangeType }: RegisterFormProps) => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="sm:text-xl text-white/80">PHONE</FormLabel>
+              <FormLabel className="sm:text-base text-white/80">
+                PHONE
+              </FormLabel>
               <FormControl>
                 <PhoneInput
-                  placeholder="Enter your email"
+                  placeholder="Enter your phone"
                   {...field}
                   className="text-xl!"
                 />
@@ -136,23 +143,32 @@ const RegisterForm = ({ handleChangeType }: RegisterFormProps) => {
             </FormItem>
           )}
         />
+
         <div className="flex gap-4 w-full max-sm:flex-col">
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel className="sm:text-xl text-white/80">
+                <FormLabel className="sm:text-base text-white/80">
                   PASSWORD
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Password"
-                    {...field}
-                    className=" mt-1 py-8 px-4 border-b border-b-white/30 outline-none text-xl!
-                  rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
-                    type="password"
-                  />
+                  <div className="relative group">
+                    <Input
+                      placeholder="Password"
+                      {...field}
+                      className="mt-1 py-8 px-4 pr-12 border-b border-b-white/30 outline-none text-base! rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary w-full"
+                      type={showPassword ? "text" : "password"}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-secondary transition-colors"
+                    >
+                      {showPassword ? <EyeOff size={24} /> : <Eye size={24} />}
+                    </button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -164,30 +180,46 @@ const RegisterForm = ({ handleChangeType }: RegisterFormProps) => {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel className="sm:text-xl text-white/80">
+                <FormLabel className="sm:text-base text-white/80">
                   CONFIRM PASSWORD
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Confirm Password"
-                    {...field}
-                    className=" mt-1 py-8 px-4 border-b border-b-white/30 outline-none text-xl!
-                  rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
-                    type="password"
-                  />
+                  <div className="relative group">
+                    <Input
+                      placeholder="Confirm Password"
+                      {...field}
+                      className="mt-1 py-8 px-4 pr-12 border-b border-b-white/30 outline-none text-base! rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary w-full"
+                      type={showConfirmPassword ? "text" : "password"}
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-secondary transition-colors"
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff size={24} />
+                      ) : (
+                        <Eye size={24} />
+                      )}
+                    </button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <Button
           variant={"secondary"}
-          className="w-full py-7 text-xl"
+          className="w-full py-6 text-lg"
           size={"lg"}
           disabled={loading}
+          type="submit"
         >
-          Register
+          {loading ? "Registering..." : "Register"}
         </Button>
       </form>
     </Form>

@@ -2,13 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Facebook,
-  Instagram,
-  Youtube,
-  Music2,
-  LoaderCircle,
-} from "lucide-react";
+import { Facebook, Instagram, Youtube, LoaderCircle } from "lucide-react";
 
 import {
   Form,
@@ -27,6 +21,7 @@ import {
   socialSchema,
 } from "@/schema/admin-dashboard/frontend-schema";
 import { useUpdateById } from "@/hooks/use-update-data";
+import TikTokIcon from "@/components/tiktok-icon";
 
 const SOCIAL_PLATFORMS = [
   {
@@ -50,7 +45,7 @@ const SOCIAL_PLATFORMS = [
   {
     id: "tiktok",
     label: "TikTok",
-    icon: <Music2 className="w-4 h-4" />,
+    icon: <TikTokIcon size={14} />,
     placeholder: "https://tiktok.com/@yourprofile",
   },
 ];

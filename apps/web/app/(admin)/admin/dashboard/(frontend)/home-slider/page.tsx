@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 const HomeSlider = () => {
   return (
-    <div>
+    <div className="max-xl:px-6">
       <h1 className="text-xl font-semibold my-6">Home Slider</h1>
       <AdminSectionCard title="Sliders" action={<AddSliderModal />}>
         <div>

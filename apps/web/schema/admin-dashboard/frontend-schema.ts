@@ -1,10 +1,13 @@
 import * as z from "zod";
 export const sliderSchema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters"),
+  title: z
+    .string()
+    .min(3, "Title must be at least 3 characters")
+    .max(40, "Title exceeds the maximum length of 40 characters"),
   description: z
     .string()
     .min(5, "Description must be at least 5 characters")
-    .max(100, "Description exceeds the maximum length"),
+    .max(80, "Description exceeds the maximum length of 80 characters"),
   image: z
     .instanceof(File)
     .refine((file) => file.size > 0, "Image is required"),

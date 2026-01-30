@@ -102,9 +102,12 @@ const AddCategories = ({ open, setOpen, initialData }: Props) => {
       setLoading(false);
     }
   };
-
+  const handleCloseModal = () => {
+    setOpen(false);
+    if (!initialData) form.reset();
+  };
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleCloseModal}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{initialData ? "Edit" : "Add New"} Category</DialogTitle>
@@ -167,7 +170,7 @@ const AddCategories = ({ open, setOpen, initialData }: Props) => {
                 ) : (
                   <Plus className="mr-2 h-4 w-4" />
                 )}
-                Create Category
+                {initialData ? "Edit" : "Add"} Category
               </Button>
             </DialogFooter>
           </form>

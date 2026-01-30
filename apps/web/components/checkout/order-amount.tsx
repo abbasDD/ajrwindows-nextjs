@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { calculateOrderTotals } from "@/lib/cart-calculation";
 import { createClient } from "@/lib/supabase/client";
 import { PromoCodeTypes } from "@/types/product-types";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface OrderAmountProps {
   appliedPromo: PromoCodeTypes | null;
@@ -53,7 +54,16 @@ export const OrderAmount = ({
         toast.error(`Minimum order for this code is $${data.min_order_amount}`);
         return;
       }
-
+      // check the usage limit
+      if (data.usage_limit && data.usage_limit <= data.used_count) {
+        toast.error("Promo code has reached its usage limit");
+        return;
+      }
+      // update the used_count
+      await supabase
+        .from("promo_codes")
+        .update({ used_count: data.used_count + 1 })
+        .eq("id", data.id);
       setAppliedPromo(data);
       toast.success("Promo code applied!");
     } catch (err) {
@@ -68,9 +78,10 @@ export const OrderAmount = ({
     <div className="sticky top-24 space-y-6">
       <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
         <h3 className="text-xl font-bold mb-6 tracking-tight">Order Summary</h3>
-        <div className="max-h-60 overflow-y-auto space-y-4 mb-6 pr-2 custom-scrollbar">
+
+        <ScrollArea className="h-60 mb-6">
           {items.map((item) => (
-            <div key={item.id} className="flex gap-4 relative">
+            <div key={item.id} className="flex gap-4 my-4 pr-6 relative">
               <div className=" size-16 rounded-lg bg-white/10 overflow-hidden flex-shrink-0">
                 <img
                   src={item.image}
@@ -79,20 +90,26 @@ export const OrderAmount = ({
                 />
               </div>
 
-              <span className="absolute  -right-1 size-5 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+              <span className="absolute right-5 size-5 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center">
                 {item.quantity}
               </span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{item.name}</p>
-                <p
-                  className={`text-xs text-white/40 ${item.discounted_price && "line-through"}`}
-                >
-                  ${item.price}
+                <p className={`text-xs text-white/60 font-medium`}>
+                  {item.discounted_price! > 0 && (
+                    <span className="text-xs line-through mr-1">
+                      ${item.price}
+                    </span>
+                  )}
+                  $
+                  {item.discounted_price! > 0
+                    ? item.discounted_price
+                    : item.price}
                 </p>
               </div>
             </div>
           ))}
-        </div>
+        </ScrollArea>
 
         <div className="flex gap-2 mb-6">
           <div className="relative flex-1">

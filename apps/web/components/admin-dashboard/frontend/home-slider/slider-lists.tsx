@@ -49,9 +49,9 @@ export default function SliderList() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Image</TableHead>
+          <TableHead className="max-lg:hidden">Image</TableHead>
           <TableHead>Title</TableHead>
-          <TableHead>Description</TableHead>
+          <TableHead className="max-md:hidden">Description</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Created At</TableHead>
           <TableHead>Actions</TableHead>
@@ -62,7 +62,7 @@ export default function SliderList() {
           <>
             {[1, 2, 3].map((i) => (
               <TableRow key={i}>
-                <TableCell>
+                <TableCell className="max-lg:hidden">
                   <Skeleton className="h-12 w-20" />
                 </TableCell>
                 <TableCell>
@@ -107,7 +107,7 @@ export default function SliderList() {
           data?.length > 0 &&
           data?.map((slider) => (
             <TableRow key={slider?.id}>
-              <TableCell>
+              <TableCell className="max-lg:hidden">
                 <Image
                   src={slider?.image_url}
                   className="h-12 w-20 object-cover rounded"
@@ -117,9 +117,9 @@ export default function SliderList() {
                 />
               </TableCell>
 
-              <TableCell>{slider.title}</TableCell>
+              <TableCell className="truncate">{slider.title}</TableCell>
 
-              <TableCell className="max-w-xs truncate">
+              <TableCell className="max-w-xs max-md:hidden truncate">
                 {slider.description}
               </TableCell>
 

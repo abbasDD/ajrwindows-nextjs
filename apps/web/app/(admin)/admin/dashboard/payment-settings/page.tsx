@@ -8,14 +8,14 @@ export const metadata: Metadata = {
 };
 const ManagePromoCode = () => {
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Payment Settings Form</h1>
       <div className="mb-4">
         <AdminSectionCard title="">
           <PaymentSettingsForm />
         </AdminSectionCard>
       </div>
-    </>
+    </div>
   );
 };
 

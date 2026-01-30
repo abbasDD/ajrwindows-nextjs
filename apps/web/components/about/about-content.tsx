@@ -93,7 +93,7 @@ const AboutContent = () => {
                     <span className="text-secondary font-mono tracking-[0.4em] text-[10px] uppercase block">
                       // {section.tag}
                     </span>
-                    <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+                    <h2 className="text-xl md:text-xl xl:text-2xl font-bold text-white tracking-tight">
                       {section.title}
                     </h2>
                     <div className="h-[2px] w-16 bg-secondary rounded-full" />
@@ -101,7 +101,7 @@ const AboutContent = () => {
 
                   <div
                     className={cn(
-                      "text-gray-300 text-base md:text-lg leading-relaxed font-light",
+                      "text-gray-300 text-base xl:text-lg leading-relaxed font-light",
                       "overflow-hidden break-words",
                       "[&_p]:mb-4 [&_p]:last:mb-0", // Handle paragraph spacing
                       "[&_span]:!text-gray-300", // Override Quill inline span colors

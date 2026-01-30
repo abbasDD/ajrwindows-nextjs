@@ -25,7 +25,7 @@ const CategoriesContent = () => {
             <motion.h2
               initial={{ y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-secondary text-sm  font-bold uppercase tracking-[0.2em]"
+              className="text-secondary text-xs  font-bold uppercase tracking-[0.2em]"
             >
               Choose What You Want
             </motion.h2>
@@ -33,7 +33,7 @@ const CategoriesContent = () => {
               initial={{ y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-xl md:text-4xl  font-bold text-white  leading-snug"
+              className="text-xl md:text-2xl xl:text-3xl  font-bold text-white  leading-snug"
             >
               Categories Related to Items
             </motion.h1>
@@ -43,7 +43,7 @@ const CategoriesContent = () => {
             initial={{ opacity: 0.5 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="max-w-2xl text-sm md:text-lg text-white/50 leading-relaxed font-medium"
+            className="max-w-2xl text-sm md:text-base text-white/50 leading-relaxed font-medium"
           >
             At AJR, we offer a comprehensive range of doors and windows to suit
             every need. From classic wooden doors to sleek glass windows, our

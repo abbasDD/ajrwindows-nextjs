@@ -61,8 +61,10 @@ const CreateProductForm = ({ productId }: { productId?: string }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const router = useRouter();
 
-  const { data: categories } = useGetData<any>("categories");
-  const { data: allProductTypes } = useGetData<any>("product_types");
+  const { data: categories, isLoading: isLoadingCategory } =
+    useGetData<any>("categories");
+  const { data: allProductTypes, isLoading: isLoadingProductType } =
+    useGetData<any>("product_types");
   const { data: existingProduct, isLoading: isFetching } = useGetDataById<any>(
     "products",
     productId as string,
@@ -122,7 +124,14 @@ const CreateProductForm = ({ productId }: { productId?: string }) => {
       });
       setImagePreview(existingProduct.image_url);
     }
-  }, [existingProduct, categories, form]);
+  }, [
+    existingProduct,
+    categories,
+    form,
+    allProductTypes,
+    isLoadingCategory,
+    isLoadingProductType,
+  ]);
 
   const selectedCategoryId = form.watch("categoryId");
 
@@ -331,7 +340,7 @@ const CreateProductForm = ({ productId }: { productId?: string }) => {
                   <FormControl>
                     <Textarea
                       rows={4}
-                      className="bg-white/5 border-white/10 text-white"
+                      className="bg-white/5 h-24 border-white/10 text-white"
                       {...field}
                     />
                   </FormControl>
@@ -347,7 +356,7 @@ const CreateProductForm = ({ productId }: { productId?: string }) => {
             <span className="w-8 h-[1px] bg-[#D4C385]/30"></span>
             Product Media
           </h2>
-          <div className="bg-white/5 border border-dashed border-white/10 rounded-xl p-6 relative">
+          <div className="bg-white/5 border border-dashed border-white/10 grid place-items-center w-full h-[220px] rounded-xl p-6 overflow-hidden relative">
             {!imagePreview ? (
               <div className="flex flex-col items-center justify-center py-10 space-y-4">
                 <UploadCloud className="h-10 w-10 text-gray-400" />
@@ -362,7 +371,7 @@ const CreateProductForm = ({ productId }: { productId?: string }) => {
                 />
               </div>
             ) : (
-              <div className="relative group max-w-sm mx-auto aspect-square bg-[#0F1115] rounded-lg overflow-hidden border border-white/10">
+              <div className="relative group max-w-sm mx-auto w-full h-full bg-[#0F1115] rounded-lg overflow-hidden border border-white/10">
                 <Image
                   src={imagePreview}
                   alt="Preview"

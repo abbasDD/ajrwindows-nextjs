@@ -14,6 +14,7 @@ import {
 import { useGetData } from "@/hooks/use-get-data";
 import LayoutXSmall from "../layout/layout-x-small";
 import { Button } from "../ui/button";
+import TikTokIcon from "../tiktok-icon";
 
 const Footer = () => {
   const { data } = useGetData<any>("settings_social_links");
@@ -26,11 +27,7 @@ const Footer = () => {
     { name: "Contact Us", path: "/contact" },
   ];
 
-  const resources = [
-    { name: "E-Catalog", path: "/catalog" },
-    // { name: "Terms & Conditions", path: "/terms" },
-    // { name: "Privacy Policy", path: "/privacy" },
-  ];
+  const resources = [{ name: "E-Catalog", path: "/catalog" }];
 
   const paymentMethods = [
     { src: "/payment/master.png", alt: "Mastercard" },
@@ -53,7 +50,11 @@ const Footer = () => {
       label: "Instagram",
     },
     { icon: <Youtube size={18} />, url: savedLinks.youtube, label: "YouTube" },
-    { icon: <Music2 size={18} />, url: savedLinks.tiktok, label: "TikTok" },
+    {
+      icon: <TikTokIcon size={18} color="#000" />,
+      url: savedLinks.tiktok,
+      label: "TikTok",
+    },
   ];
 
   return (
@@ -65,7 +66,7 @@ const Footer = () => {
             <Image
               src="/assets/AJR.png"
               alt="Logo"
-              width={100}
+              width={70}
               height={40}
               className="h-auto"
             />
@@ -163,7 +164,7 @@ const Footer = () => {
                 {paymentMethods.map((item, i) => (
                   <div
                     key={i}
-                    className="bg-white/5 rounded px-3 py-2 border border-white/5 grayscale hover:grayscale-0 transition-all"
+                    className="bg-white/5 grid place-items-center rounded px-3 py-2 border border-white/5 grayscale hover:grayscale-0 transition-all"
                   >
                     <Image
                       src={item.src}
@@ -181,17 +182,6 @@ const Footer = () => {
 
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-white/30 text-[10px] uppercase tracking-widest font-bold">
           <p>© 2026 AJR Systems. All Rights Reserved.</p>
-          <div className="flex gap-6">
-            <Link
-              href="/privacy"
-              className="hover:text-white transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
-              Terms of Service
-            </Link>
-          </div>
         </div>
       </LayoutXSmall>
     </footer>

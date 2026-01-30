@@ -42,7 +42,7 @@ import { OrderTypes } from "@/types/order-types";
 import { CartItem } from "@/store/use-cart-store";
 import { toast } from "sonner";
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 15;
 
 const UserOrdersTable = () => {
   const { user } = useUserStore();
@@ -159,7 +159,7 @@ const UserOrdersTable = () => {
                 className="text-secondary animate-pulse"
               />
             </EmptyMedia>
-            <EmptyTitle className="text-3xl font-bold mt-4 text-white">
+            <EmptyTitle className="text-xl xl:text-2xl font-bold mt-4 text-white">
               No Orders Yet
             </EmptyTitle>
             <EmptyDescription className="text-white/40 max-w-xs mx-auto leading-relaxed mt-2">
@@ -168,8 +168,8 @@ const UserOrdersTable = () => {
             </EmptyDescription>
           </EmptyHeader>
           <div className="mt-8">
-            <Link href="/shop">
-              <Button className="bg-secondary text-black font-bold px-10 py-6 rounded-2xl hover:bg-secondary/90 transition-all hover:scale-105 group">
+            <Link href="/categories">
+              <Button size="lg" variant={"secondary"}>
                 Browse Products
                 <ArrowRight className="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -186,19 +186,19 @@ const UserOrdersTable = () => {
         <Table>
           <TableHeader className="bg-white/[0.03]">
             <TableRow className="border-white/10 hover:bg-transparent">
-              <TableHead className="text-white/60 font-bold uppercase text-[11px] tracking-widest pl-6">
+              <TableHead className="text-white/60 tracking-widest pl-6">
                 ID
               </TableHead>
-              <TableHead className="text-white/60 font-bold uppercase text-[11px] tracking-widest">
+              <TableHead className="text-white/60  tracking-widest">
                 Date
               </TableHead>
-              <TableHead className="text-white/60 font-bold uppercase text-[11px] tracking-widest text-center">
+              <TableHead className="text-white/60 tracking-widest text-center">
                 Status
               </TableHead>
-              <TableHead className="text-white/60 font-bold uppercase text-[11px] tracking-widest text-right">
+              <TableHead className="text-white/60  tracking-widest text-right">
                 Amount
               </TableHead>
-              <TableHead className="text-white/60 font-bold uppercase text-[11px] tracking-widest text-right pr-6">
+              <TableHead className="text-white/60 tracking-widest text-right pr-6">
                 Action
               </TableHead>
             </TableRow>
@@ -227,7 +227,7 @@ const UserOrdersTable = () => {
                   <TableCell className="text-center">
                     <Badge
                       variant="outline"
-                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight ${
+                      className={`capitalize font-medium tracking-tight ${
                         order.payment_status === "paid"
                           ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                           : "bg-amber-500/10 text-amber-400 border-amber-500/20"
@@ -245,14 +245,12 @@ const UserOrdersTable = () => {
                         <Button
                           size="sm"
                           disabled={isFetchingItems}
-                          className="bg-secondary text-black font-extrabold hover:bg-secondary/80 gap-2 px-4 shadow-lg shadow-secondary/10 h-8 text-xs rounded-lg transition-all active:scale-95"
+                          className="bg-secondary text-black text-xs 
+                          hover:bg-secondary/80 gap-2  shadow-lg shadow-secondary/10 
+                          transition-all active:scale-95"
                           onClick={() => handlePayNow(order)}
                         >
-                          {isFetchingItems ? (
-                            <Loader2 className="size-3 animate-spin" />
-                          ) : (
-                            <CreditCard className="size-3" />
-                          )}
+                          <CreditCard className="size-3" />
                           Pay Now
                         </Button>
                       ) : (

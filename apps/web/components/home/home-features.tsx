@@ -40,17 +40,18 @@ const FeatureCard = ({
   return (
     <Card className="w-full border-none flex flex-col sm:flex-row group rounded-xl overflow-hidden">
       <CardContent className="p-8 sm:w-[60%] flex flex-col justify-center space-y-4 z-10">
-        <h2 className="text-2xl lg:text-3xl font-bold text-white tracking-tight">
+        <h2 className="text-xl xl:text-2xl font-bold text-white tracking-tight">
           {title}
         </h2>
-        <p className="text-base text-white/70 leading-relaxed max-w-[280px]">
+        <p className="text-sm md:text-base text-white/70 leading-relaxed">
           {description}
         </p>
         <Link
           href={href}
-          className="inline-block w-fit mt-4 underline underline-offset-8 text-xl font-semibold text-secondary hover:text-white transition-colors"
+          className="inline-block w-fit mt-4 underline underline-offset-8 
+          text-base font-semibold text-secondary hover:text-white transition-colors"
         >
-          View Now
+          View All
         </Link>
       </CardContent>
       <div className="relative w-full sm:w-[40%] h-[260px] sm:h-auto overflow-hidden">

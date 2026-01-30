@@ -85,12 +85,20 @@ const AddTestiomnialsModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size={"lg"} variant={"secondary"}>
+        <Button
+          size={"lg"}
+          variant={"secondary"}
+          onClick={() => {
+            setOpen(true);
+            form.reset();
+            setImagePreview(null);
+          }}
+        >
           Add Testimonials
         </Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add Testimonials</DialogTitle>
         </DialogHeader>
@@ -160,7 +168,7 @@ const AddTestiomnialsModal = () => {
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="mt-2 mx-auto max-h-40 rounded-md object-contain"
+                      className="mt-2 mx-auto max-h-32 rounded-md object-contain"
                     />
                   )}
                 </FormItem>
@@ -199,7 +207,7 @@ const AddTestiomnialsModal = () => {
                 variant={"secondary"}
               >
                 {loading && <LoaderCircle className="animate-spin" />}
-                Save
+                Add Testimonial
               </Button>
               <Button
                 variant="outline"

@@ -12,10 +12,9 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const CartSheet = () => {
-  const router = useRouter();
   const { items, removeItem, clearCart, updateQuantity, getTotalPrice } =
     useCartStore();
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0);
@@ -24,9 +23,9 @@ export const CartSheet = () => {
     <Sheet>
       <SheetTrigger asChild>
         <button className="relative p-2 group transition-transform active:scale-95">
-          <ShoppingBag className="size-6 md:size-7 text-white group-hover:text-secondary transition-colors" />
+          <ShoppingBag className="size-4 md:size-6 xl:size-7 text-white group-hover:text-secondary transition-colors" />
           {itemCount > 0 && (
-            <span className="absolute top-0 right-0 size-5 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center animate-in zoom-in">
+            <span className="absolute top-0 right-0 size-4 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center animate-in zoom-in">
               {itemCount}
             </span>
           )}
@@ -34,7 +33,7 @@ export const CartSheet = () => {
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-md flex flex-col p-0">
         <SheetHeader className="p-6 border-b border-white/5">
-          <SheetTitle className="text-xl font-bold tracking-tighter flex items-center gap-2">
+          <SheetTitle className="text-base xl:text-xl font-bold tracking-tighter flex items-center gap-2">
             Your Cart <span className="text-white/20">({itemCount})</span>
           </SheetTitle>
         </SheetHeader>
@@ -59,7 +58,7 @@ export const CartSheet = () => {
               <div className="space-y-8 py-8">
                 {items.map((item) => (
                   <div key={item.id} className="flex gap-4">
-                    <div className="relative size-24 rounded-2xl overflow-hidden border border-white/5 bg-white/5 flex-shrink-0">
+                    <div className="relative size-20 xl:size-24 rounded-2xl overflow-hidden border border-white/5 bg-white/5 flex-shrink-0">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -125,17 +124,18 @@ export const CartSheet = () => {
               <span className="text-white/60 font-medium uppercase tracking-widest text-xs">
                 Subtotal
               </span>
-              <span className="text-2xl font-bold text-white">
+              <span className="text-base md:text-lg xl:text-2xl font-bold text-white">
                 ${getTotalPrice()}
               </span>
             </div>
-            <Button
-              variant={"secondary"}
-              onClick={() => router.push("/checkout")}
-              className="w-full h-14 rounded-xl  font-semibold text-lg hover:scale-[1.02] transition-transform"
-            >
-              Checkout Now
-            </Button>
+            <Link href="/checkout">
+              <Button
+                variant={"secondary"}
+                className="w-full xl:h-14 xl:rounded-xl  font-semibold xl:text-base hover:scale-[1.02] transition-transform"
+              >
+                Checkout Now
+              </Button>
+            </Link>
           </SheetFooter>
         )}
       </SheetContent>

@@ -42,10 +42,10 @@ const OurProducts = () => {
   return (
     <LayoutXSmall className="py-20 w-full">
       <div className="text-center space-y-4 mb-10">
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white">
+        <h1 className="text-xl md:text-3xl xl:text-4xl font-bold text-white">
           Our Products
         </h1>
-        <p className="max-w-4xl mx-auto text-base md:text-lg text-white/60 leading-relaxed">
+        <p className="max-w-4xl mx-auto text-sm xl:text-base text-white/60 leading-relaxed">
           Get instant quotes, customize in real-time, and order directly from
           AJR
         </p>
@@ -63,7 +63,7 @@ const OurProducts = () => {
           >
             <TabsTrigger
               value="all"
-              className="cursor-pointer py-2.5 px-5 md:py-3 md:px-8 text-sm md:text-base transition-all whitespace-nowrap"
+              className="cursor-pointer py-2.5 px-5 xl:py-3 xl:px-8 text-sm xl:text-base transition-all whitespace-nowrap"
             >
               All
             </TabsTrigger>
@@ -76,7 +76,7 @@ const OurProducts = () => {
                   <TabsTrigger
                     key={cat.id}
                     value={cat.id}
-                    className="cursor-pointer py-2.5 px-5 md:py-3 md:px-8 text-sm md:text-base transition-all whitespace-nowrap"
+                    className="cursor-pointer py-2.5 px-5 xl:py-3 xl:px-8 text-sm xl:text-base transition-all whitespace-nowrap"
                   >
                     {cat.category}
                   </TabsTrigger>
@@ -118,7 +118,6 @@ const OurProducts = () => {
         <Button
           variant="secondary"
           size="lg"
-          className="px-10 py-6 text-lg font-semibold"
           onClick={() => router.push("/categories")}
         >
           Go to Shop

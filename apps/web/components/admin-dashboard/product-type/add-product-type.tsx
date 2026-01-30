@@ -107,8 +107,12 @@ const AddProductType = ({ open, setOpen, initialData }: Props) => {
     }
   };
 
+  const handleCloseModal = () => {
+    setOpen(false);
+    if (!initialData) form.reset();
+  };
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleCloseModal}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -195,7 +199,7 @@ const AddProductType = ({ open, setOpen, initialData }: Props) => {
                 ) : (
                   <Plus className="mr-2" />
                 )}
-                Create Product Type
+                {initialData ? "Update" : "Add"} Product Type
               </Button>
             </DialogFooter>
           </form>

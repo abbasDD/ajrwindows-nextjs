@@ -41,10 +41,10 @@ const HomeOwners = () => {
   return (
     <LayoutXSmall className="py-16">
       <div className="text-center space-y-4 mb-12">
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+        <h1 className="text-xl md:text-3xl xl:text-4xl font-bold text-white">
           Why Homeowners & Builders Choose AJR
-        </h2>
-        <p className="max-w-4xl mx-auto text-base md:text-lg text-white/60 leading-relaxed">
+        </h1>
+        <p className="max-w-4xl mx-auto text-sm xl:text-base text-white/60 leading-relaxed">
           Get instant, transparent quotes, explore flexible customization
           options in real time, and conveniently place your order directly with
           AJR all through a streamlined and hassle-free online experience.
@@ -69,7 +69,7 @@ const FeatureCard = ({ item }: { item: ContentItem }) => {
         <Icon className="size-8 text-secondary group-hover:scale-125 transition-all duration-300" />
 
         <div className="space-y-2">
-          <h3 className="text-xl uppercase font-semibold text-secondary">
+          <h3 className="text-base uppercase font-semibold text-secondary">
             {item.title}
           </h3>
           <p className="text-white/80 leading-snug">{item.paragraph}</p>

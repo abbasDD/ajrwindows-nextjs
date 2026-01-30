@@ -53,7 +53,7 @@ const UserNav = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="outline-none">
-          <Avatar className="size-10 md:size-12 border-2 border-secondary transition-transform hover:scale-105">
+          <Avatar className="size-8 md:size-10 xl:size-12 border-2 border-secondary transition-transform hover:scale-105">
             <AvatarFallback className="cursor-pointer bg-secondary text-black font-bold">
               {getInitials(user?.email ?? "")}
             </AvatarFallback>
@@ -70,16 +70,13 @@ const UserNav = () => {
           </div>
         </DropdownMenuLabel>
 
-        <DropdownMenuLabel
-          className="font-normal cursor-pointer hover:bg-secondary/10 rounded-sm"
-          onClick={() => router.push("/user-orders")}
-        >
-          <div className="flex flex-col space-y-1">
+        <DropdownMenuLabel className="font-normal cursor-pointer hover:bg-secondary/10 rounded-sm">
+          <Link href={"/user-orders"} className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">Orders</p>
             <p className="text-xs leading-none text-muted-foreground truncate">
               Users Orders
             </p>
-          </div>
+          </Link>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -118,16 +115,16 @@ const Navbar = () => {
     <header className="absolute z-50 w-full top-0 py-6">
       <LayoutXSmall className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/logo.png" alt="logo" width={60} height={60} priority />
+          <Image src="/logo.png" alt="logo" width={50} height={50} priority />
         </Link>
 
-        <nav className="hidden md:block">
+        <nav className="hidden lg:block">
           <ul className="flex gap-x-8">
             {navLinks.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="text-white text-lg hover:text-secondary transition-colors"
+                  className="text-white text-base hover:text-secondary transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -136,12 +133,12 @@ const Navbar = () => {
           </ul>
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           {user && <CartSheet />}
           {user ? <UserNav /> : <AuthModal />}
         </div>
 
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="text-white">
@@ -162,7 +159,7 @@ const Navbar = () => {
                       key={link.label}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-xl font-medium hover:text-secondary transition-colors"
+                      className="text-base font-medium hover:text-secondary transition-colors"
                     >
                       {link.label}
                     </Link>

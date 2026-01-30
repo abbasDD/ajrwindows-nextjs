@@ -82,7 +82,7 @@ export default function ContactForm() {
     <div className="grid lg:grid-cols-2 gap-16">
       <div className="space-y-10">
         <div>
-          <h1 className="text-2xl sm:text-4xl font-semibold mb-6">
+          <h1 className="text-xl md:text-2xl xl:text-4xl font-semibold mb-6">
             Contact Us
           </h1>
           <p className="text-white/60 text-base max-w-md leading-relaxed">
@@ -118,14 +118,16 @@ export default function ContactForm() {
         </div>
 
         <div className="pt-4">
-          <h5 className="text-xl font-bold mb-6">Connect with us:</h5>
+          <h5 className="text-base xl:text-xl font-bold mb-6">
+            Connect with us:
+          </h5>
           <div className="flex gap-4">
             {socialLinks.map((social, idx) => (
               <a
                 key={idx}
                 href={social.url}
                 target="_blank"
-                className="w-12 h-12 flex items-center justify-center border border-white/20 rounded-full text-white hover:border-secondary hover:text-secondary transition-all"
+                className="size-10 flex items-center justify-center border border-white/20 rounded-full text-white hover:border-secondary hover:text-secondary transition-all"
               >
                 {social.icon}
               </a>
@@ -152,20 +154,20 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <Card className="bg-card/10">
+      <Card className="bg-card/50">
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <h2 className="text-2xl font-semibold mb-4">Get In Touch</h2>
+              <h2 className="text-xl xl:text-2xl font-semibold mb-4">
+                Get In Touch
+              </h2>
 
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="sm:text-base text-white/60">
-                      YOUR NAME
-                    </FormLabel>
+                    <FormLabel className=" text-white/60">Fullname</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter your name"
@@ -183,8 +185,8 @@ export default function ContactForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="sm:text-base text-white/60">
-                      EMAIL ADDRESS
+                    <FormLabel className=" text-white/60">
+                      Email Address
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -203,8 +205,8 @@ export default function ContactForm() {
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="sm:text-base text-white/60">
-                      HOW CAN WE HELP?
+                    <FormLabel className=" text-white/60">
+                      How can we help?
                     </FormLabel>
                     <FormControl>
                       <Textarea

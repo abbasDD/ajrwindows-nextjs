@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 const ManageOrders = () => {
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Manage Orders</h1>
       <div className="mb-4">
         <AdminSectionCard title="Recent Orders">
           <OrdersList />
         </AdminSectionCard>
       </div>
-    </>
+    </div>
   );
 };
 

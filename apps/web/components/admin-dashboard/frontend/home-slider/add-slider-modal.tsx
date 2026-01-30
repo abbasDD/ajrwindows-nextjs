@@ -39,6 +39,7 @@ const AddSliderModal = () => {
 
   const form = useForm<SliderFormValues>({
     resolver: zodResolver(sliderSchema),
+    mode: "onChange",
     defaultValues: {
       title: "",
       description: "",
@@ -82,16 +83,20 @@ const AddSliderModal = () => {
     };
     reader.readAsDataURL(file);
   };
-
+  const handleOpenModal = () => {
+    setOpen(true);
+    form.reset();
+    setImagePreview(null);
+  };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size={"lg"} variant={"secondary"}>
+        <Button onClick={handleOpenModal} size={"lg"} variant={"secondary"}>
           Add Slider
         </Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add Slider</DialogTitle>
         </DialogHeader>
@@ -161,7 +166,7 @@ const AddSliderModal = () => {
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="mt-2 mx-auto max-h-40 rounded-md object-contain"
+                      className="mt-2 mx-auto max-h-32 rounded-md object-contain"
                     />
                   )}
                 </FormItem>
@@ -191,7 +196,7 @@ const AddSliderModal = () => {
                 variant={"secondary"}
               >
                 {loading && <LoaderCircle className="animate-spin" />}
-                Save
+                Add Slider
               </Button>
               <Button
                 variant="outline"

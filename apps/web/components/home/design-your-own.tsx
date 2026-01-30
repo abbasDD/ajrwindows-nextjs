@@ -76,10 +76,10 @@ const DesignYourOwn = () => {
     <Card className="bg-card my-16 border-none overflow-hidden flex flex-col md:flex-row md:h-[650px] rounded-none shadow-none p-0">
       <div className="flex-1 py-12 px-8 sm:px-12 lg:px-20 flex flex-col justify-center">
         <div className="max-w-xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+          <h1 className="text-xl md:text-3xl xl:text-4xl font-bold text-white">
             Design Your Own
-          </h2>
-          <p className="mt-4 mb-12 text-white/60 text-lg leading-relaxed">
+          </h1>
+          <p className="mt-4 mb-12 text-white/60 text-sm lg:text-base leading-relaxed">
             Experience the future of home improvement. Get instant quotes,
             customize in real-time, and order directly from AJR.
           </p>
@@ -88,10 +88,13 @@ const DesignYourOwn = () => {
             {designContents.map((content, index) => (
               <div key={content.id} className="group space-y-3">
                 <div className="flex items-center gap-4">
-                  <div className="size-10 bg-secondary text-primary rounded-xl font-bold grid place-items-center shadow-[0_0_15px_rgba(var(--primary),0.3)] transition-transform group-hover:scale-110">
+                  <div
+                    className="size-6 xl:size-8 bg-secondary text-primary
+                    rounded-sm font-bold grid place-items-center shadow-[0_0_15px_rgba(var(--primary),0.3)] transition-transform group-hover:scale-110"
+                  >
                     {index + 1}
                   </div>
-                  <h3 className="text-sm uppercase tracking-[0.1em] text-secondary font-bold">
+                  <h3 className="text-xs xl:text-sm uppercase tracking-[0.1em] text-secondary font-bold">
                     {content.title}
                   </h3>
                 </div>

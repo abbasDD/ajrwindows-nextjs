@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 const AdminDashboard = () => {
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Admin Dashboard</h1>
       <UserStatics />
       <div className="my-4">
@@ -17,7 +17,7 @@ const AdminDashboard = () => {
           <UsersLists />
         </AdminSectionCard>
       </div>
-    </>
+    </div>
   );
 };
 

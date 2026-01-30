@@ -14,14 +14,16 @@ const StaticsCard = ({ title, statics, Icon, isLoading }: StaticsCardProps) => {
   return (
     <Card>
       <CardContent className="flex flex-col items-center justify-center gap-5 py-8">
-        <div className="bg-secondary text-primary rounded-full size-16 grid place-items-center shadow-lg shadow-secondary/10">
+        <div className="bg-secondary text-primary rounded-full size-12 xl:size-16 grid place-items-center shadow-lg shadow-secondary/10">
           {Icon}
         </div>
-        <h1 className="text-xl font-medium text-white/70">{title}</h1>
+        <h1 className="text-base xl:text-xl font-medium text-white/70">
+          {title}
+        </h1>
         {isLoading ? (
           <Loader2 className="animate-spin text-secondary" size={24} />
         ) : (
-          <p className="text-4xl font-bold text-white">{statics}</p>
+          <p className="text-2xl xl:text-3xl font-bold text-white">{statics}</p>
         )}
       </CardContent>
     </Card>

@@ -37,15 +37,15 @@ const CustomerReviews = () => {
   return (
     <LayoutXSmall className="w-full py-24 relative overflow-hidden">
       <div className="text-center mb-20 space-y-4">
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+        <h1 className="text-xl md:text-3xl xl:text-4xl font-bold text-white">
           Community Love
-        </h2>
-        <p className="max-w-2xl mx-auto text-base md:text-lg text-white/50 leading-relaxed">
+        </h1>
+        <p className="max-w-2xl mx-auto text-sm xl:text-base text-white/50 leading-relaxed">
           Real feedback from homeowners and builders who demand the best.
         </p>
       </div>
 
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 h-[750px] overflow-hidden">
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 h-[750px] overflow-hidden">
         <MarqueeColumn items={col1} duration={30} />
         <MarqueeColumn items={col2} duration={40} reverse={true} />
         <MarqueeColumn items={col3} duration={35} />

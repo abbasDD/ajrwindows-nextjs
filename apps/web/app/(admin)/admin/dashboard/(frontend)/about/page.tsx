@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 };
 const About = () => {
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">About Page</h1>
       <div className="mb-4">
-        <AdminSectionCard title="Our Mession">
+        <AdminSectionCard title="Our Mission">
           <OurMission />
         </AdminSectionCard>
       </div>
@@ -20,7 +20,7 @@ const About = () => {
       <AdminSectionCard title="Our Values">
         <OurValues />
       </AdminSectionCard>
-    </>
+    </div>
   );
 };
 

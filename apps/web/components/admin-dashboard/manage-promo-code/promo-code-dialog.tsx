@@ -31,7 +31,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -46,6 +45,7 @@ import {
 import { useInsertOne } from "@/hooks/use-insert-data";
 import { useUpdateById } from "@/hooks/use-update-data";
 import { PromoCodeTypes } from "@/types/product-types";
+import { Switch } from "@/components/ui/switch";
 
 export function PromoCodeDialog({ initialData }: { initialData?: any }) {
   const [loading, setLoading] = useState(false);
@@ -116,7 +116,14 @@ export function PromoCodeDialog({ initialData }: { initialData?: any }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" size={initialData ? "icon" : "lg"}>
+        <Button
+          variant="secondary"
+          size={initialData ? "icon" : "lg"}
+          onClick={() => {
+            setOpen(true);
+            if (!initialData) form.reset();
+          }}
+        >
           {initialData ? (
             <Edit className="h-4 w-4" />
           ) : (
@@ -127,7 +134,7 @@ export function PromoCodeDialog({ initialData }: { initialData?: any }) {
           )}
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">
             {initialData ? "Update Promo Code" : "Add New Promo Code"}
@@ -291,11 +298,12 @@ export function PromoCodeDialog({ initialData }: { initialData?: any }) {
               control={form.control}
               name="is_active"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-4">
+                <FormItem className="flex flex-row items-center space-x-3 py-4">
                   <FormControl>
-                    <Checkbox
+                    <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className={field.value ? "bg-green-500" : "bg-gray-300"}
                     />
                   </FormControl>
                   <FormLabel>Active</FormLabel>
@@ -316,7 +324,7 @@ export function PromoCodeDialog({ initialData }: { initialData?: any }) {
                 ) : (
                   <Plus className="mr-2" />
                 )}
-                {initialData ? "Update" : "Create"}
+                {initialData ? "Update" : "Add"} Promo Code
               </Button>
             </DialogFooter>
           </form>

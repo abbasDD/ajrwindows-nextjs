@@ -86,11 +86,11 @@ export const ADMIN_SIDEBAR_MENU_ITEMS: MenuItem[] = [
     icon: Tag,
     path: "/admin/dashboard/manage-promo-codes",
   },
-  {
-    label: "Payment Settings",
-    icon: CreditCard,
-    path: "/admin/dashboard/payment-settings",
-  },
+  // {
+  //   label: "Payment Settings",
+  //   icon: CreditCard,
+  //   path: "/admin/dashboard/payment-settings",
+  // },
 ];
 // storage bucket enums
 export enum Buckets {

@@ -15,16 +15,16 @@ const Ecatalog = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-blue-950/70 to-transparent pointer-events-none" />
 
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-        <h2 className="text-white text-4xl  md:text-6xl font-bold tracking-tighter leading-none">
+        <h2 className="text-white text-3xl  xl:text-5xl font-bold tracking-tighter leading-none">
           E-Catalog
         </h2>
-        <p className="text-white/60 tracking-wide pt-4 text-sm sm:text-lg max-w-lg font-medium">
+        <p className="text-white/60 tracking-wide pt-4 text-sm md:text-base xl:text-lg max-w-lg font-medium">
           See our full product line for doors & windows
         </p>
 
         <div className="mt-10">
           <Link href="/catalog">
-            <button className="pointer-events-auto cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 px-10 py-4 rounded-full text-white text-lg font-semibold shadow-2xl hover:bg-primary hover:scale-110 transition-all duration-300">
+            <button className="pointer-events-auto cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 px-10 py-4 rounded-full text-white text-base font-semibold shadow-2xl hover:bg-primary hover:scale-110 transition-all duration-300">
               Download Catalog PDF
             </button>
           </Link>

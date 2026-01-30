@@ -56,7 +56,7 @@ export default function HeroSection() {
   const activeSlide = slides[index];
 
   return (
-    <LayoutXSmall className="relative h-screen ">
+    <div className="relative h-screen">
       <AnimatePresence mode="wait">
         <motion.div
           key={activeSlide?.image_url}
@@ -69,9 +69,7 @@ export default function HeroSection() {
         />
       </AnimatePresence>
 
-      <div className="absolute top-0 left-0 h-full w-full lg:w-[45%] bg-gradient-to-r from-black/80 to-transparent z-0" />
-
-      <div className="relative z-10 h-full mx-auto flex flex-col justify-center">
+      <div className="pl-6 sm:pl-14 lg:pl-32 relative z-20 h-full pt-20 lg:w-1/2 flex flex-col justify-center bg-primary/50">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeSlide?.id}
@@ -81,43 +79,42 @@ export default function HeroSection() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <h1 className="text-white max-w-4xl text-3xl sm:text-5xl lg:text-7xl font-bold leading-snug">
+            <h1 className="text-white text-2xl sm:text-5xl xl:text-6xl font-bold leading-snug">
               {activeSlide?.title}
             </h1>
 
-            <p className="text-white/90 text-base lg:text-2xl w-[90%] lg:w-[50%]">
+            <p className="text-white/90 text-base lg:text-xl w-[90%] ">
               {activeSlide?.description}
             </p>
 
             <Button
               variant={"secondary"}
               size={"lg"}
-              className="p-8 text-xl font-medium"
+              className="p-6 text-base font-medium"
             >
               Start Building
             </Button>
           </motion.div>
         </AnimatePresence>
 
-        {/* Navigation Buttons - Only show if more than 1 slide */}
         {slides.length > 1 && (
-          <div className="flex pt-20 gap-4 text-white">
+          <div className="flex pt-16 gap-4 text-white">
             <button
               onClick={prevSlide}
-              className="border border-white size-12 grid place-items-center rounded-full hover:bg-secondary hover:border-secondary transition-all"
+              className="border border-white size-10 grid place-items-center rounded-full hover:bg-secondary hover:border-secondary transition-all"
             >
-              <ChevronLeft size={24} />
+              <ChevronLeft size={18} />
             </button>
             <button
               onClick={nextSlide}
-              className="border border-white size-12 grid place-items-center rounded-full hover:bg-secondary hover:border-secondary transition-all"
+              className="border border-white size-10 grid place-items-center rounded-full hover:bg-secondary hover:border-secondary transition-all"
             >
-              <ChevronRight size={24} />
+              <ChevronRight size={18} />
             </button>
           </div>
         )}
       </div>
-    </LayoutXSmall>
+    </div>
   );
 }
 

@@ -31,7 +31,7 @@ export default function ViewDetailsModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-xl  border-white/10 text-white p-0 overflow-hidden shadow-2xl">
+      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto border-white/10 text-white p-0  shadow-2xl">
         <div className="p-6 space-y-6">
           {/* Header */}
           <DialogHeader className="flex flex-row items-center justify-between border-b border-white/5 pb-4">
@@ -46,7 +46,6 @@ export default function ViewDetailsModal({
             </div>
           </DialogHeader>
 
-          {/* Contact Info Grid */}
           <div className="grid grid-cols-2 gap-y-6 gap-x-4">
             <div className="space-y-1.5">
               <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest flex items-center gap-1.5">

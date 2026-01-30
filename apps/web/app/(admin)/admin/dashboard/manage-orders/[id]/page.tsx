@@ -13,12 +13,12 @@ interface Props {
 const OrdersDetails = async ({ params }: Props) => {
   const { id } = await params;
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Orders Details</h1>
       <div className="mt-6">
         <OrderDetailsView orderId={id} />
       </div>
-    </>
+    </div>
   );
 };
 

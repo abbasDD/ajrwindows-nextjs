@@ -7,8 +7,8 @@ export const metadata: Metadata = {
 };
 const LoginPage = () => {
   return (
-    <div className="flex items-center justify-center gap-5 h-screen w-screen">
-      <img src="/hero.jpg" alt="logo" className="w-1/2 h-full" />
+    <div className=" flex items-center justify-center gap-5 h-screen w-screen">
+      <img src="/hero.jpg" alt="logo" className="w-1/2 h-full max-md:hidden" />
       <div className="flex-1">
         <AdminLoginForm />
       </div>

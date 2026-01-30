@@ -22,7 +22,7 @@ const AuthModal = () => {
           <Button
             size={"lg"}
             variant={"link"}
-            className="text-secondary text-lg py-6"
+            className="text-secondary text-base font-semibold"
             onClick={() => {
               setOpen(true);
               setType("register");
@@ -33,7 +33,7 @@ const AuthModal = () => {
           <Button
             size={"lg"}
             variant={"secondary"}
-            className="text-lg py-6"
+            className="text-base "
             onClick={() => {
               setOpen(true);
               setType("login");
@@ -49,7 +49,7 @@ const AuthModal = () => {
         </div>
         <div className="flex-1 px-6 sm:px-12 max-h-[90vh] py-8 overflow-y-auto">
           <Activity mode={type === "register" ? "visible" : "hidden"}>
-            <RegisterForm handleChangeType={handleChangeType} />
+            <RegisterForm />
           </Activity>
           <Activity mode={type === "login" ? "visible" : "hidden"}>
             <LoginForm setOpen={setOpen} handleChangeType={handleChangeType} />

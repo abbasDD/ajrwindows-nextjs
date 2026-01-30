@@ -48,8 +48,8 @@ const AdminSidebar = () => {
         <Image
           src="/logo.png"
           alt="logo"
-          width={80}
-          height={100}
+          width={70}
+          height={80}
           className="mx-auto py-4"
         />
       </SidebarHeader>

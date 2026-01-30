@@ -292,7 +292,7 @@ const CheckoutForm = ({
                     <Textarea
                       placeholder="123 Luxury Lane"
                       {...field}
-                      className="custom_input_fields"
+                      className="custom_input_fields !h-32"
                     />
                   </FormControl>
                   <FormMessage />

@@ -37,6 +37,7 @@ export default function PromoCodeList() {
       toast.error(e.message);
     }
   };
+  console.log("data", data);
 
   return (
     <>
@@ -46,12 +47,12 @@ export default function PromoCodeList() {
             <TableHead>Code</TableHead>
             <TableHead>Discount</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead>Usage</TableHead>
             <TableHead>Validity</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* Loading State */}
           {isLoading && (
             <>
               {[1, 2, 3].map((i) => (
@@ -75,8 +76,6 @@ export default function PromoCodeList() {
               ))}
             </>
           )}
-
-          {/* Empty/Error State */}
           {!isLoading && (error || !data || data.length === 0) && (
             <TableRow>
               <TableCell colSpan={5} className="h-60">
@@ -120,6 +119,14 @@ export default function PromoCodeList() {
                       <XCircle className="mr-1 h-3 w-3" /> Inactive
                     </Badge>
                   )}
+                </TableCell>
+
+                <TableCell className="text-xs text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="default" className="px-2 py-0.5 text-xs">
+                      {promo.used_count} / {promo.usage_limit}
+                    </Badge>
+                  </div>
                 </TableCell>
                 <TableCell className="text-muted-foreground text-xs">
                   {formatTimestamp(promo.valid_from)} -{" "}

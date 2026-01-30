@@ -119,7 +119,7 @@ const ThankYouDetails = ({ order }: ThankYouDetailsProps) => {
       </Card>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-        <Link href="/shop" className="w-full sm:w-auto">
+        <Link href="/categories" className="w-full sm:w-auto">
           <Button
             variant="outline"
             className="w-full border-white/10 hover:bg-white/5 text-white"

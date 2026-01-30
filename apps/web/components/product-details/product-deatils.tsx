@@ -61,7 +61,9 @@ const ProductDetails = ({
       quantity: 1,
     });
 
-    toast.success(`${initialProduct.product_name} added to cart`);
+    toast.success(`${initialProduct.product_name} added to cart`, {
+      position: "bottom-left",
+    });
   };
 
   const categoryName = initialProduct.categories?.category || "COLLECTION";
@@ -92,16 +94,16 @@ const ProductDetails = ({
         </div>
 
         <div className="flex flex-col gap-6">
-          <Badge className="bg-secondary/20 text-secondary w-fit tracking-[0.2em] px-4 py-1.5 uppercase text-[10px] font-bold">
+          <Badge className="bg-secondary/20 text-secondary w-fit tracking-[0.2em] capitalize text-[10px] font-bold">
             {categoryName}
           </Badge>
 
-          <h1 className="text-2xl lg:text-5xl font-bold text-white tracking-tighter leading-tight">
+          <h1 className="text-2xl lg:text-4xl font-bold text-white tracking-tighter leading-tight">
             {initialProduct.product_name}
           </h1>
 
           <div className="flex items-baseline gap-4">
-            <span className="text-4xl font-semibold text-secondary">
+            <span className="text-4xl font-bold text-secondary">
               $
               {initialProduct.discounted_price > 0
                 ? initialProduct.discounted_price
@@ -122,18 +124,16 @@ const ProductDetails = ({
             <Button
               onClick={handleAddToCart}
               variant="secondary"
-              className="flex-1 h-14 rounded-xl font-bold hover:scale-[1.02] transition-transform"
+              className="flex-1 h-12 rounded-xl font-bold hover:scale-[1.02] transition-transform"
             >
               <ShoppingBasket className="mr-2" size={20} /> Add to Cart
             </Button>
-            {/* <Link href="/customdoor" className="flex-1"> */}
             <Button
               variant="outline"
-              className="flex-1 h-14 rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10"
+              className="flex-1 h-12 rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10"
             >
               Customize
             </Button>
-            {/* </Link> */}
           </div>
         </div>
       </div>

@@ -8,9 +8,11 @@ export const metadata: Metadata = {
 };
 const CreateProductPage = async () => {
   return (
-    <AdminSectionCard title={"Create New Product"}>
-      <CreateProductForm />
-    </AdminSectionCard>
+    <div className="max-lg:px-6">
+      <AdminSectionCard title={"Create New Product"}>
+        <CreateProductForm />
+      </AdminSectionCard>
+    </div>
   );
 };
 

@@ -77,18 +77,22 @@ const LoginForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <h1 className="text-xl sm:text-4xl pb-8 font-semibold">Login</h1>
+        <h1 className="text-xl md:text-2xl xl:text-3xl pb-8 font-semibold">
+          Login
+        </h1>
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="sm:text-xl text-white/80">EMAIL</FormLabel>
+              <FormLabel className="sm:text-base text-white/80">
+                EMAIL
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your email"
                   {...field}
-                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-xl!
+                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-base!
                   rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
                   type="email"
                 />
@@ -103,14 +107,14 @@ const LoginForm = ({
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="sm:text-xl text-white/80">
+              <FormLabel className="sm:text-base text-white/80">
                 PASSWORD
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your password"
                   {...field}
-                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-xl!
+                  className="mt-1 py-8 px-6 border-b border-b-white/30 outline-none text-base!
                   rounded-none border-t-0 border-l-0 border-r-0 focus-visible:ring-0 focus-visible:border-b-secondary"
                   type="password"
                 />
@@ -119,21 +123,22 @@ const LoginForm = ({
             </FormItem>
           )}
         />
+
+        <Button
+          onClick={() => handleChangeType("forgot-password")}
+          className="text-secondary -mt-4 px-0 text-base"
+          variant={"link"}
+          type="button"
+        >
+          Forgot your password?
+        </Button>
         <Button
           variant={"secondary"}
-          className="w-full py-7 text-xl"
+          className="w-full py-6 text-lg"
           size={"lg"}
         >
           {loading && <LoaderCircle className="animate-spin" />}
           Login
-        </Button>
-
-        <Button
-          onClick={() => handleChangeType("forgot-password")}
-          className="text-secondary text-xl"
-          variant={"link"}
-        >
-          Forgot your password?
         </Button>
       </form>
     </Form>

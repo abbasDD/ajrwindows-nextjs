@@ -16,7 +16,7 @@ const ProductCard = ({ product }: { product: ProductDataType }) => {
               src={product.image_url}
               alt={product.product_name}
               fill
-              className="object-contain p-6 group-hover:scale-110 transition-transform duration-500"
+              className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-500"
             />
           </div>
         </Link>

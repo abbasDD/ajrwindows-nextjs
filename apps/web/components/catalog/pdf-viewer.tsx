@@ -58,40 +58,40 @@ function NavButton({
     </Tooltip>
   );
 }
+
 export default function PDFViewer() {
   const [numPages, setNumPages] = useState<number>();
   const [leftPage, setLeftPage] = useState<number>(1);
-  const [scale, setScale] = useState<number>(1);
+  const [scale, setScale] = useState<number>(0.6); // Start with a reasonable base
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   const viewerRef = useRef<HTMLDivElement>(null);
-  const A4_HEIGHT = 842;
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      const height = window.innerHeight;
       setIsMobile(width < 768);
 
-      const availableHeight = height * (isFullscreen ? 0.85 : 0.7);
-      const scaleFactor = availableHeight / A4_HEIGHT;
-
-      let baseScale = Math.min(Math.max(scaleFactor, 0.4), 1.5);
-      if (width < 640) baseScale *= 0.8;
-
-      setScale(baseScale);
+      if (!isLoaded) {
+        if (width < 640) setScale(0.4);
+        else if (width < 1024) setScale(0.6);
+        else setScale(0.8);
+      }
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
-    document.addEventListener("fullscreenchange", () =>
-      setIsFullscreen(!!document.fullscreenElement),
-    );
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isFullscreen]);
+    const fsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", fsChange);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("fullscreenchange", fsChange);
+    };
+  }, [isLoaded]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -124,12 +124,15 @@ export default function PDFViewer() {
     <TooltipProvider>
       <div
         ref={viewerRef}
-        className={`flex flex-col items-center justify-center transition-colors duration-500 ${
-          isFullscreen ? "bg-zinc-950 p-4" : "min-h-screen bg-transparent py-12"
+        className={`flex flex-col items-center justify-center transition-colors duration-500 overflow-hidden ${
+          isFullscreen
+            ? "bg-zinc-950 h-screen"
+            : "min-h-screen bg-transparent py-12"
         }`}
       >
-        <div className="z-50 mb-6 flex flex-wrap items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 p-2 rounded-2xl shadow-2xl">
-          <div className="flex items-center gap-1 pr-2 border-r border-white/10">
+        {/* Toolbar */}
+        <div className="z-50 mb-6 flex items-center max-sm:flex-col gap-2 bg-white/10 backdrop-blur-xl border border-white/20 p-2 rounded-2xl shadow-2xl">
+          <div className="flex items-center gap-1 pr-2 sm:border-r border-white/10">
             <NavButton
               onClick={goToPrev}
               disabled={leftPage <= 1}
@@ -152,12 +155,12 @@ export default function PDFViewer() {
 
           <div className="flex items-center gap-1 px-1">
             <NavButton
-              onClick={() => setScale((s) => s - 0.1)}
+              onClick={() => setScale((s) => Math.max(s - 0.1, 0.2))}
               icon={<ZoomOut size={18} />}
               label="Zoom Out"
             />
             <NavButton
-              onClick={() => setScale((s) => s + 0.1)}
+              onClick={() => setScale((s) => Math.min(s + 0.1, 3.0))}
               icon={<ZoomIn size={18} />}
               label="Zoom In"
             />
@@ -176,9 +179,10 @@ export default function PDFViewer() {
           </div>
         </div>
 
-        <div className="relative flex items-center justify-center w-full overflow-hidden flex-1">
+        {/* PDF Area */}
+        <div className="relative flex flex-1 items-center justify-center w-full overflow-auto custom-scrollbar">
           {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-zinc-900/5 rounded-3xl animate-pulse">
+            <div className="absolute inset-0 flex items-center justify-center bg-zinc-900/5 animate-pulse z-10">
               <Loader2 className="w-10 h-10 animate-spin text-primary" />
             </div>
           )}
@@ -186,7 +190,8 @@ export default function PDFViewer() {
           <Document
             file={pdfPath}
             onLoadSuccess={onDocumentLoadSuccess}
-            className="flex justify-center"
+            className="flex flex-col items-center"
+            loading={null}
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -195,24 +200,24 @@ export default function PDFViewer() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: direction === "next" ? -20 : 20 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="flex gap-1 md:gap-4 shadow-2xl rounded-lg overflow-hidden"
-                style={{
-                  transform: `scale(${scale})`,
-                  transformOrigin: "center center",
-                }}
+                className="flex gap-2 md:gap-4 shadow-2xl rounded-lg"
               >
                 <Page
                   pageNumber={leftPage}
+                  scale={scale} // <--- THIS FIXED THE ZOOM
                   renderAnnotationLayer={false}
                   renderTextLayer={false}
-                  className="bg-white"
+                  className="bg-white shadow-lg"
+                  loading={null}
                 />
                 {rightPage && (
                   <Page
                     pageNumber={rightPage}
+                    scale={scale} // <--- THIS FIXED THE ZOOM
                     renderAnnotationLayer={false}
                     renderTextLayer={false}
-                    className="bg-white border-l border-zinc-200"
+                    className="bg-white border-l border-zinc-200 shadow-lg"
+                    loading={null}
                   />
                 )}
               </motion.div>

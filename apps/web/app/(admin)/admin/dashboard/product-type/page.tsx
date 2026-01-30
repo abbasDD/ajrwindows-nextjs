@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 const Page = () => {
   return (
-    <div>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Product Type</h1>
       <ProductType />
     </div>

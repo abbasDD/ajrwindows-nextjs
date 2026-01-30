@@ -19,7 +19,7 @@ export default function CheckoutCom() {
           <ShoppingBag size={40} />
         </div>
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tighter">
+          <h1 className="text-2xl font-bold tracking-tighter">
             Your cart is empty
           </h1>
           <p className="text-white/40 max-w-xs mx-auto">
@@ -48,7 +48,7 @@ export default function CheckoutCom() {
           />
           Back to Cart
         </Link>
-        <h1 className="text-2xl md:text-4xl font-bold ">Checkout</h1>
+        <h1 className="text-2xl md:text-3xl font-bold ">Checkout</h1>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-12 items-start mb-12">

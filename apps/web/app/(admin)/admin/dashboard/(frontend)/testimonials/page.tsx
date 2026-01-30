@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 const Testimonials = () => {
   return (
-    <div>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Home Testimonials</h1>
       <AdminSectionCard title="Testimonials" action={<AddTestiomnialsModal />}>
         <div>

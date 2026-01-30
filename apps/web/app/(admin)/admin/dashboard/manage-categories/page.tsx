@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 const ManageCateogry = () => {
   return (
-    <div>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Manage Cateogry</h1>
       <Categories />
     </div>

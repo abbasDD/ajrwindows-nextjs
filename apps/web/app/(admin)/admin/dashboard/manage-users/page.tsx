@@ -8,14 +8,14 @@ export const metadata: Metadata = {
 };
 const ManageUser = () => {
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Manage Users</h1>
       <div className="mb-4">
         <AdminSectionCard title="Users">
           <UsersLists />
         </AdminSectionCard>
       </div>
-    </>
+    </div>
   );
 };
 

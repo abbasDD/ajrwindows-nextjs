@@ -12,9 +12,11 @@ export const metadata: Metadata = {
 const CreateProductPage = async ({ params }: Props) => {
   const { id } = await params;
   return (
-    <AdminSectionCard title={"Edit Product"}>
-      <CreateProductForm productId={id} />
-    </AdminSectionCard>
+    <div className="max-lg:px-6">
+      <AdminSectionCard title={"Edit Product"}>
+        <CreateProductForm productId={id} />
+      </AdminSectionCard>
+    </div>
   );
 };
 

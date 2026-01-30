@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Empty,
@@ -32,8 +31,8 @@ import { bucket } from "@/services/upload.service";
 import { CategoryDataType } from "@/types/category-types";
 import { ProductDataType } from "@/types/product-types";
 import DeleteConfirmDialoag from "@/components/ui/delete-confirm-dialog";
-import { useRouter } from "next/navigation";
 import ProductFAQManager from "./faq/product-faq-manager";
+import Link from "next/link";
 
 function TableSkeleton() {
   return (
@@ -88,7 +87,6 @@ export default function ProductList() {
     isLoading: prodLoading,
     error,
   } = useGetData<ProductDataType>("products");
-  const router = useRouter();
 
   const filteredProducts = useMemo(() => {
     if (!products) return [];
@@ -135,8 +133,6 @@ export default function ProductList() {
           <TableRow>
             <TableHead>Image</TableHead>
             <TableHead>Product Name</TableHead>
-            <TableHead>Usage</TableHead>
-            <TableHead>Color</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Discounted</TableHead>
             <TableHead>Prodcut Faqs </TableHead>
@@ -167,21 +163,6 @@ export default function ProductList() {
                 <TableCell className="font-medium">
                   {product.product_name}
                 </TableCell>
-                <TableCell>
-                  <span className="text-sm text-muted-foreground">
-                    {product.usage}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className="flex flex-col gap-1">
-                    <Badge
-                      variant="outline"
-                      className="w-fit text-[10px] uppercase"
-                    >
-                      {product.color}
-                    </Badge>
-                  </div>
-                </TableCell>
                 <TableCell>${product.price}</TableCell>
                 <TableCell className="text-green-600 font-semibold">
                   ${product.discounted_price}
@@ -193,18 +174,17 @@ export default function ProductList() {
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="hover:text-blue-600"
-                      onClick={() =>
-                        router.push(
-                          `/admin/dashboard/manage-product/${product.id}`,
-                        )
-                      }
+                    <Link
+                      href={`/admin/dashboard/manage-product/${product.id}`}
                     >
-                      <Edit className="h-4 w-4" />
-                    </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="hover:text-blue-600"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </Link>
                     <DeleteConfirmDialoag
                       onConfirm={() =>
                         handleDelete(product.id as any, product.image_url)

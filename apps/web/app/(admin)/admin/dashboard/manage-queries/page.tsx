@@ -8,14 +8,14 @@ export const metadata: Metadata = {
 };
 const ManageQueries = () => {
   return (
-    <>
+    <div className="max-lg:px-6">
       <h1 className="text-xl font-semibold my-6">Manage Queries</h1>
       <div className="mb-4">
         <AdminSectionCard title="Queries">
           <QueriesLists />
         </AdminSectionCard>
       </div>
-    </>
+    </div>
   );
 };
 

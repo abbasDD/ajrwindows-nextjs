@@ -53,7 +53,7 @@ const Projects = () => {
       <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
         <button
           onClick={() => router.push("/categories")}
-          className="pointer-events-auto cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 px-10 py-4 rounded-full text-white text-lg font-semibold shadow-2xl hover:bg-primary hover:scale-110 transition-all duration-300"
+          className="pointer-events-auto cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 px-10 py-4 rounded-full text-white text-base font-semibold shadow-2xl hover:bg-primary hover:scale-110 transition-all duration-300"
         >
           See All Projects
         </button>
