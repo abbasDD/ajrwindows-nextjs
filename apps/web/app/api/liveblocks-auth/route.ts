@@ -1,11 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 import { Liveblocks } from "@liveblocks/node";
 
-const liveblocks = new Liveblocks({
-  secret: process.env.LIVEBLOCKS_SECRET_KEY!,
-});
-
 export async function POST(request: Request) {
+  const secret = process.env.LIVEBLOCKS_SECRET_KEY!;
+  if (!secret || !secret.startsWith("sk_")) {
+    return new Response("Liveblocks secret missing", { status: 500 });
+  }
+  const liveblocks = new Liveblocks({
+    secret,
+  });
   const supabase = await createClient();
   const {
     data: { user },
