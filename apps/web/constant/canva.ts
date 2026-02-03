@@ -17,6 +17,10 @@ import {
   AlignVerticalJustifyCenter,
   AlignHorizontalJustifyCenter,
   AlignEndVertical,
+  DoorOpen,
+  LayoutGrid,
+  Glasses,
+  GlassesIcon,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
@@ -54,12 +58,42 @@ export const shapeElements = [
     value: "freeform",
   },
 ];
+export const doorElements = [
+  { name: "Single Door", value: "single", Icon: DoorOpen },
+  { name: "Double Door", value: "double", Icon: DoorOpen },
+  { name: "Single Arched", value: "single-arched", Icon: DoorOpen },
+  { name: "Transom", value: "transom", Icon: DoorOpen },
+];
+export const glassElements = [
+  { name: "Glass 1", value: "glass1", Icon: GlassesIcon },
+  { name: "Glass 2", value: "glass2", Icon: GlassesIcon },
+];
 
+export const windowElements = [
+  { name: "Standard", value: "standard-window", Icon: LayoutGrid },
+  { name: "Double Hung", value: "double-hung", Icon: LayoutGrid },
+  { name: "Picture", value: "picture-window", Icon: LayoutGrid },
+];
 export const navElements = [
   {
     Icon: MousePointer2,
     name: "Select",
     value: "select",
+  },
+  {
+    Icon: Glasses,
+    name: "Glasses",
+    value: glassElements,
+  },
+  {
+    Icon: DoorOpen,
+    name: "Doors",
+    value: doorElements,
+  },
+  {
+    Icon: LayoutGrid,
+    name: "Windows",
+    value: windowElements,
   },
   {
     Icon: Square,

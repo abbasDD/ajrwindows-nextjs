@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useSelf } from "@/liveblocks.config";
 
 const ShapesMenu = ({
   item,
@@ -16,6 +17,8 @@ const ShapesMenu = ({
   handleImageUpload,
   imageInputRef,
 }: ShapesMenuProps) => {
+  const self = useSelf();
+  const canWrite = self?.canWrite ?? true;
   const isDropdownElem = item.value.some(
     (elem) => elem?.value === activeElement.value,
   );
@@ -26,8 +29,9 @@ const ShapesMenu = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="no-ring">
           <Button
-            className="relative h-5 w-5 object-contain"
+            size={"icon"}
             onClick={() => handleActiveElement(item)}
+            disabled={!canWrite}
           >
             {Icon && (
               <Icon

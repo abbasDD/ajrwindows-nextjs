@@ -12,7 +12,11 @@ import {
   RenderCanvas,
 } from "@/types/canva-types";
 import { defaultNavElement } from "@/constant/canva";
-import { createSpecificShape } from "./shapes";
+import {
+  createArchitecturalElement,
+  createCustomWindowsImage,
+  createSpecificShape,
+} from "./shapes";
 
 // initialize fabric canvas
 export const initializeFabric = ({
@@ -36,8 +40,6 @@ export const initializeFabric = ({
 
   return canvas;
 };
-
-// instantiate creation of custom fabric object/shape and add it to canvas
 export const handleCanvasMouseDown = ({
   options,
   canvas,
@@ -48,55 +50,62 @@ export const handleCanvasMouseDown = ({
   // get pointer coordinates
   const pointer = canvas.getPointer(options.e);
 
-  /**
-   * get target object i.e., the object that is clicked
-   * findtarget() returns the object that is clicked
-   *
-   * findTarget: http://fabricjs.com/docs/fabric.Canvas.html#findTarget
-   */
   const target = canvas.findTarget(options.e, false);
 
-  // set canvas drawing mode to false
   canvas.isDrawingMode = false;
 
-  // if selected shape is freeform, set drawing mode to true and return
   if (selectedShapeRef.current === "freeform") {
     isDrawing.current = true;
     canvas.isDrawingMode = true;
     canvas.freeDrawingBrush.width = 5;
     return;
   }
-
   canvas.isDrawingMode = false;
 
-  // if target is the selected shape or active selection, set isDrawing to false
+  const architecturalTypes = [
+    "single",
+    "double",
+    "single-arched",
+    "double-arched",
+    "transom",
+    "standard-window",
+    "double-hung",
+    "picture-window",
+  ];
+  const glassTypes = ["glass1", "glass2"];
+
   if (
     target &&
     (target.type === selectedShapeRef.current ||
       target.type === "activeSelection")
   ) {
     isDrawing.current = false;
-
-    // set active object to target
     canvas.setActiveObject(target);
-
-    /**
-     * setCoords() is used to update the controls of the object
-     * setCoords: http://fabricjs.com/docs/fabric.Object.html#setCoords
-     */
     target.setCoords();
   } else {
     isDrawing.current = true;
-
-    // create custom fabric object/shape and set it to shapeRef
-    shapeRef.current = createSpecificShape(
-      selectedShapeRef.current,
-      pointer as any,
-    );
-
-    // if shapeRef is not null, add it to canvas
+    if (glassTypes.includes(selectedShapeRef.current)) {
+      createCustomWindowsImage(
+        selectedShapeRef.current,
+        pointer as any,
+        (img) => {
+          shapeRef.current = img;
+          canvas.add(img);
+          canvas.requestRenderAll();
+        },
+      );
+    } else if (architecturalTypes.includes(selectedShapeRef.current)) {
+      shapeRef.current = createArchitecturalElement(
+        selectedShapeRef.current,
+        pointer as any,
+      );
+    } else {
+      shapeRef.current = createSpecificShape(
+        selectedShapeRef.current,
+        pointer as any,
+      );
+    }
     if (shapeRef.current) {
-      // add: http://fabricjs.com/docs/fabric.Canvas.html#add
       canvas.add(shapeRef.current);
     }
   }
@@ -117,11 +126,8 @@ export const handleCanvaseMouseMove = ({
 
   canvas.isDrawingMode = false;
 
-  // get pointer coordinates
   const pointer = canvas.getPointer(options.e);
 
-  // depending on the selected shape, set the dimensions of the shape stored in shapeRef in previous step of handelCanvasMouseDown
-  // calculate shape dimensions based on pointer coordinates
   switch (selectedShapeRef?.current) {
     case "rectangle":
       shapeRef.current?.set({
@@ -160,11 +166,8 @@ export const handleCanvaseMouseMove = ({
       break;
   }
 
-  // render objects on canvas
-  // renderAll: http://fabricjs.com/docs/fabric.Canvas.html#renderAll
   canvas.renderAll();
 
-  // sync shape in storage
   if (shapeRef.current?.objectId) {
     syncShapeInStorage(shapeRef.current);
   }
@@ -395,28 +398,28 @@ export const handleResize = ({ canvas }: { canvas: fabric.Canvas | null }) => {
 };
 
 // zoom canvas on mouse scroll
-export const handleCanvasZoom = ({
-  options,
-  canvas,
-}: {
-  options: fabric.IEvent & { e: WheelEvent };
-  canvas: fabric.Canvas;
-}) => {
-  const delta = options.e?.deltaY;
-  let zoom = canvas.getZoom();
-
-  // allow zooming to min 20% and max 100%
-  const minZoom = 0.2;
-  const maxZoom = 1;
-  const zoomStep = 0.001;
-
-  // calculate zoom based on mouse scroll wheel with min and max zoom
-  zoom = Math.min(Math.max(minZoom, zoom + delta * zoomStep), maxZoom);
-
-  // set zoom to canvas
-  // zoomToPoint: http://fabricjs.com/docs/fabric.Canvas.html#zoomToPoint
-  canvas.zoomToPoint({ x: options.e.offsetX, y: options.e.offsetY }, zoom);
-
-  options.e.preventDefault();
-  options.e.stopPropagation();
-};
+// export const handleCanvasZoom = ({
+//   options,
+//   canvas,
+// }: {
+//   options: fabric.IEvent & { e: WheelEvent };
+//   canvas: fabric.Canvas;
+// }) => {
+//   const delta = options.e?.deltaY;
+//   let zoom = canvas.getZoom();
+//
+//   // allow zooming to min 20% and max 100%
+//   const minZoom = 0.2;
+//   const maxZoom = 1;
+//   const zoomStep = 0.001;
+//
+//   // calculate zoom based on mouse scroll wheel with min and max zoom
+//   zoom = Math.min(Math.max(minZoom, zoom + delta * zoomStep), maxZoom);
+//
+//   // set zoom to canvas
+//   // zoomToPoint: http://fabricjs.com/docs/fabric.Canvas.html#zoomToPoint
+//   canvas.zoomToPoint({ x: options.e.offsetX, y: options.e.offsetY }, zoom);
+//
+//   options.e.preventDefault();
+//   options.e.stopPropagation();
+// };

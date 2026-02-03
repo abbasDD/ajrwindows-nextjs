@@ -3,7 +3,13 @@
 import { fabric } from "fabric";
 import { useEffect, useRef, useState } from "react";
 
-import { useMutation, useRedo, useStorage, useUndo } from "@/liveblocks.config";
+import {
+  useMutation,
+  useRedo,
+  useSelf,
+  useStorage,
+  useUndo,
+} from "@/liveblocks.config";
 import {
   handleCanvaseMouseMove,
   handleCanvasMouseDown,
@@ -12,7 +18,6 @@ import {
   handleCanvasObjectMoving,
   handleCanvasObjectScaling,
   handleCanvasSelectionCreated,
-  handleCanvasZoom,
   handlePathCreated,
   handleResize,
   initializeFabric,
@@ -23,10 +28,13 @@ import { LeftSidebar, Live, Navbar, RightSidebar } from "./components/index";
 import { handleImageUpload } from "@/lib/shapes";
 import { defaultNavElement } from "@/constant/canva";
 import { ActiveElement, Attributes } from "@/types/canva-types";
+import { SidebarProvider } from "../ui/sidebar";
 
 const CustomDesignCom = () => {
   const undo = useUndo();
   const redo = useRedo();
+  const self = useSelf();
+  const canWrite = self?.canWrite ?? true;
 
   const canvasObjects = useStorage((root) => root.canvasObjects);
 
@@ -125,7 +133,16 @@ const CustomDesignCom = () => {
       canvasRef,
       fabricRef,
     });
+    if (!canWrite) {
+      canvas.selection = false;
+      canvas.hoverCursor = "not-allowed"; // Mouse cursor change
+      canvas.defaultCursor = "default";
 
+      canvas.on("selection:created", () => {
+        canvas.discardActiveObject();
+        canvas.renderAll();
+      });
+    }
     canvas.on("mouse:down", (options) => {
       handleCanvasMouseDown({
         options,
@@ -231,7 +248,7 @@ const CustomDesignCom = () => {
         }),
       );
     };
-  }, [canvasRef]); // run this effect only once when the component mounts and the canvasRef changes
+  }, [canvasRef]);
 
   useEffect(() => {
     renderCanvas({
@@ -247,7 +264,6 @@ const CustomDesignCom = () => {
         imageInputRef={imageInputRef}
         activeElement={activeElement}
         handleImageUpload={(e: any) => {
-          // prevent the default behavior of the input element
           e.stopPropagation();
 
           handleImageUpload({
@@ -261,23 +277,25 @@ const CustomDesignCom = () => {
       />
 
       <section className="flex h-full flex-row">
-        <LeftSidebar allShapes={Array.from(canvasObjects)} />
+        <SidebarProvider>
+          <LeftSidebar allShapes={Array.from(canvasObjects)} />
 
-        <Live
-          canvasRef={canvasRef}
-          undo={undo}
-          redo={redo}
-          fabricRef={fabricRef}
-        />
+          <Live
+            canvasRef={canvasRef}
+            undo={undo}
+            redo={redo}
+            fabricRef={fabricRef}
+          />
 
-        <RightSidebar
-          elementAttributes={elementAttributes}
-          setElementAttributes={setElementAttributes}
-          fabricRef={fabricRef}
-          isEditingRef={isEditingRef}
-          activeObjectRef={activeObjectRef}
-          syncShapeInStorage={syncShapeInStorage}
-        />
+          <RightSidebar
+            elementAttributes={elementAttributes}
+            setElementAttributes={setElementAttributes}
+            fabricRef={fabricRef}
+            isEditingRef={isEditingRef}
+            activeObjectRef={activeObjectRef}
+            syncShapeInStorage={syncShapeInStorage}
+          />
+        </SidebarProvider>
       </section>
     </main>
   );

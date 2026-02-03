@@ -7,7 +7,80 @@ import {
   ImageUpload,
   ModifyShape,
 } from "@/types/canva-types";
+export const createArchitecturalElement = (
+  shapeType: string,
+  pointer: { x: number; y: number },
+) => {
+  const commonProps = {
+    left: pointer.x,
+    top: pointer.y,
+    strokeWidth: 3,
+    stroke: "#222",
+    objectId: uuidv4(),
+    type: "rect",
+  };
 
+  let element;
+
+  switch (shapeType) {
+    case "single":
+    case "single-arched":
+      element = new fabric.Rect({
+        ...commonProps,
+        width: 100,
+        height: 210,
+        fill: "#66534a",
+      } as CustomFabricObject<fabric.Rect>);
+      break;
+
+    case "double":
+    case "double-arched":
+      element = new fabric.Rect({
+        ...commonProps,
+        width: 200,
+        height: 210,
+        fill: "#5c4a41",
+      } as CustomFabricObject<fabric.Rect>);
+      break;
+
+    case "transom":
+      element = new fabric.Rect({
+        ...commonProps,
+        width: 100,
+        height: 50,
+        fill: "rgba(135, 206, 235, 0.6)",
+      } as CustomFabricObject<fabric.Rect>);
+      break;
+
+    case "standard-window":
+    case "picture-window":
+      element = new fabric.Rect({
+        ...commonProps,
+        width: 120,
+        height: 120,
+        fill: "rgba(173, 216, 230, 0.4)",
+        stroke: "#000",
+        strokeWidth: 4,
+      } as CustomFabricObject<fabric.Rect>);
+      break;
+
+    case "double-hung":
+      element = new fabric.Rect({
+        ...commonProps,
+        width: 100,
+        height: 160,
+        fill: "rgba(173, 216, 230, 0.3)",
+        stroke: "#000",
+        strokeWidth: 5,
+      } as CustomFabricObject<fabric.Rect>);
+      break;
+
+    default:
+      return null;
+  }
+
+  return element;
+};
 export const createRectangle = (pointer: PointerEvent) => {
   const rect = new fabric.Rect({
     left: pointer.x,
@@ -183,4 +256,36 @@ export const bringElement = ({
   syncShapeInStorage(selectedElement);
 
   // re-render all objects on the canvas
+};
+
+export const createCustomWindowsImage = (
+  type: string,
+  pointer: { x: number; y: number },
+  callback: (img: fabric.Image) => void,
+) => {
+  const imageMap: Record<string, string> = {
+    glass1: "/glass/glass1.jpg",
+    glass2: "/glass/glass2.jpg",
+  };
+
+  const url = imageMap[type] || "/assets/default.png";
+
+  fabric.Image.fromURL(url, (img) => {
+    img.set({
+      left: pointer.x,
+      top: pointer.y,
+      originX: "left",
+      originY: "top",
+    });
+
+    // Set initial size
+    img.scaleToWidth(100);
+
+    // Assign the ID here just like your upload logic
+    // @ts-ignore
+    img.objectId = uuidv4();
+    // img.windowType = type;
+
+    callback(img);
+  });
 };

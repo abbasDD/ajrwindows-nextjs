@@ -8,6 +8,7 @@ import {
   useEventListener,
   useMyPresence,
   useOthers,
+  useSelf,
 } from "@/liveblocks.config";
 import useInterval from "@/hooks/use-interval";
 import {
@@ -43,6 +44,8 @@ const Live = ({ canvasRef, undo, redo, fabricRef }: Props) => {
   const others = useOthers();
   const [{ cursor }, updateMyPresence] = useMyPresence() as any;
   const broadcast = useBroadcastEvent();
+  const self = useSelf();
+  const canWrite = self?.canWrite ?? true;
 
   const [reactions, setReactions] = useState<Reaction[]>([]);
   const [zoom, setZoom] = useState(1);
@@ -234,6 +237,7 @@ const Live = ({ canvasRef, undo, redo, fabricRef }: Props) => {
         style={{
           cursor: cursorState.mode === CursorMode.Chat ? "none" : "auto",
         }}
+        disabled={!canWrite}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         onPointerDown={handlePointerDown}

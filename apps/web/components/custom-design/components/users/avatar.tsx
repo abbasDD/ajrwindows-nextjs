@@ -27,9 +27,7 @@ const Avatar = ({ name, otherStyles }: Props) => (
           />
         </div>
       </TooltipTrigger>
-      <TooltipContent className="border-none bg-primary-grey-200 px-2.5 py-1.5 text-xs">
-        {name}
-      </TooltipContent>
+      <TooltipContent>{name}</TooltipContent>
     </Tooltip>
   </>
 );

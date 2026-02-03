@@ -7,58 +7,64 @@ const liveblocks = new Liveblocks({
 
 export async function POST(request: Request) {
   const supabase = await createClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
   const { room } = await request.json();
-
   if (!user) {
-    if (room.startsWith("guest-")) {
-      const session = liveblocks.prepareSession(room, {
-        userInfo: {
-          name: "Guest",
-          avatar: "",
-        },
-      });
+    const { data: publicAccess } = await supabase
+      .from("room_permissions")
+      .select("access_level")
+      .eq("room_id", room)
+      .is("user_id", null)
+      .single();
 
+    const session = liveblocks.prepareSession(`guest-${Date.now()}`, {
+      userInfo: { name: "Guest", avatar: "" },
+    });
+
+    if (publicAccess) {
+      const access =
+        publicAccess.access_level === "full"
+          ? session.FULL_ACCESS
+          : session.READ_ACCESS;
+      session.allow(room, access);
+    } else {
       session.allow(room, session.FULL_ACCESS);
-      const { body, status } = await session.authorize();
-      return new Response(body, { status });
     }
 
-    return new Response("Unauthorized: Guests cannot join shared rooms", {
-      status: 403,
-    });
+    const { body, status } = await session.authorize();
+    return new Response(body, { status });
   }
 
   const session = liveblocks.prepareSession(user.id, {
     userInfo: {
-      name: user.email || "Anonymous User",
+      name: user.email || "User",
       avatar: user.user_metadata?.avatar_url || "",
     },
   });
 
-  const isOwner = room === user.id;
-
-  if (isOwner) {
+  if (room === user.id) {
     session.allow(room, session.FULL_ACCESS);
   } else {
-    const { data: hasAccess } = await supabase
+    const { data: userPermission } = await supabase
       .from("room_permissions")
-      .select("*")
+      .select("access_level")
       .eq("room_id", room)
       .eq("user_id", user.id)
       .single();
 
-    if (!hasAccess) {
-      return new Response("Forbidden: You do not have access to this room", {
-        status: 403,
-      });
+    if (userPermission) {
+      const access =
+        userPermission.access_level === "full"
+          ? session.FULL_ACCESS
+          : session.READ_ACCESS;
+      session.allow(room, access);
+    } else {
+      session.allow(room, session.FULL_ACCESS);
     }
-    session.allow(room, session.FULL_ACCESS);
   }
+
   const { body, status } = await session.authorize();
   return new Response(body, { status });
 }

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import ShapesMenu from "./shapes-menu";
 import ActiveUsers from "./users/active-users";
 import { NewThread } from "./comments/new-thread";
+import { useSelf } from "@/liveblocks.config";
 
 const Navbar = ({
   activeElement,
@@ -15,6 +16,8 @@ const Navbar = ({
   handleImageUpload,
   handleActiveElement,
 }: NavbarProps) => {
+  const self = useSelf();
+  const canWrite = self?.canWrite ?? true;
   const isActive = (value: string | Array<ActiveElement>) =>
     (activeElement && activeElement.value === value) ||
     (Array.isArray(value) &&
@@ -49,21 +52,17 @@ const Navbar = ({
                 />
               ) : item?.value === "comments" ? (
                 <NewThread>
-                  <Button className="relative w-5 h-5 p-0 bg-transparent hover:bg-transparent">
-                    {Icon && (
-                      <Icon
-                        className={`w-5 h-5 ${active ? "text-secondary" : ""}`}
-                      />
-                    )}
-                  </Button>
-                </NewThread>
-              ) : (
-                <Button className="relative w-5 h-5 p-0 bg-transparent hover:bg-transparent">
-                  {Icon && (
+                  <Button disabled={!canWrite} size={"icon"}>
                     <Icon
                       className={`w-5 h-5 ${active ? "text-secondary" : ""}`}
                     />
-                  )}
+                  </Button>
+                </NewThread>
+              ) : (
+                <Button disabled={!canWrite} size={"icon"}>
+                  <Icon
+                    className={`w-5 h-5 ${active ? "text-secondary" : ""}`}
+                  />
                 </Button>
               )}
             </li>

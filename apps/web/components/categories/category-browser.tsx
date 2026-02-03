@@ -78,7 +78,7 @@ const CategoryBrowser = () => {
               ? "All Collections"
               : categories?.find((c) => c.id === activeTab)?.category}
           </h2>
-          <p className="text-white/40 text-base mt-1">
+          <p className="text-white/40 text-sm mt-1">
             Showing {filteredProducts.length} items
           </p>
         </div>

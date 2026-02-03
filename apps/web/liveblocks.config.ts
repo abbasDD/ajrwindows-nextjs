@@ -7,26 +7,15 @@ const client = createClient({
   authEndpoint: "/api/liveblocks-auth",
 });
 
-type Presence = {
-  // cursor: { x: number, y: number } | null,
-  // ...
-};
+type Presence = {};
 
 type Storage = {
-  // author: LiveObject<{ firstName: string, lastName: string }>,
-  // ...
   canvasObjects: LiveMap<string, any>;
 };
 
-type UserMeta = {
-  // id?: string,  // Accessible through `user.id`
-  // info?: Json,  // Accessible through `user.info`
-};
+type UserMeta = {};
 
-type RoomEvent = {
-  // type: "NOTIFICATION",
-  // ...
-};
+type RoomEvent = {};
 
 export type ThreadMetadata = {
   resolved: boolean;
