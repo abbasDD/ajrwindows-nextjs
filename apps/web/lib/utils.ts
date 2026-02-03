@@ -162,3 +162,46 @@ export const exportToPdf = () => {
   // download the pdf
   doc.save("canvas.pdf");
 };
+export const getCanvasImageUrl = (designId: string): string | null => {
+  const cachedImage = localStorage.getItem(designId);
+  if (cachedImage) {
+    return cachedImage;
+  }
+  const canvas = document.querySelector("canvas");
+  if (!canvas) return null;
+  const dataUrl = canvas.toDataURL("image/png", 0.7);
+
+  try {
+    localStorage.setItem(designId, dataUrl);
+    const history = JSON.parse(localStorage.getItem("canvas_history") || "[]");
+    if (!history.includes(designId)) {
+      localStorage.setItem(
+        "canvas_history",
+        JSON.stringify([designId, ...history].slice(0, 10)),
+      );
+    }
+
+    return dataUrl;
+  } catch (error) {
+    console.error("Failed to save to localStorage:", error);
+    return dataUrl;
+  }
+};
+export const generateDesignId = async (shapes: any[]): Promise<string> => {
+  if (!shapes || shapes.length === 0) return "empty-design";
+  const msgUint8 = new TextEncoder().encode(JSON.stringify(shapes));
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  const uuidFormat = [
+    hashHex.substring(0, 8),
+    hashHex.substring(8, 12),
+    hashHex.substring(12, 16),
+    hashHex.substring(16, 20),
+    hashHex.substring(20, 32),
+  ].join("-");
+
+  return uuidFormat;
+};

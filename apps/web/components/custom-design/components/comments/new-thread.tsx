@@ -25,64 +25,47 @@ type Props = {
 };
 
 export const NewThread = ({ children }: Props) => {
-  // set state to track if we're placing a new comment or not
   const [creatingCommentState, setCreatingCommentState] = useState<
     "placing" | "placed" | "complete"
   >("complete");
 
-  /**
-   * We're using the useCreateThread hook to create a new thread.
-   *
-   * useCreateThread: https://liveblocks.io/docs/api-reference/liveblocks-react#useCreateThread
-   */
   const createThread = useCreateThread();
 
-  // get the max z-index of a thread
   const maxZIndex = useMaxZIndex();
 
-  // set state to track the coordinates of the composer (liveblocks comment editor)
   const [composerCoords, setComposerCoords] = useState<ComposerCoords>(null);
 
-  // set state to track the last pointer event
   const lastPointerEvent = useRef<PointerEvent>(null);
 
-  // set state to track if user is allowed to use the composer
   const [allowUseComposer, setAllowUseComposer] = useState(false);
   const allowComposerRef = useRef(allowUseComposer);
   allowComposerRef.current = allowUseComposer;
 
   useEffect(() => {
-    // If composer is already placed, don't do anything
     if (creatingCommentState === "complete") {
       return;
     }
 
-    // Place a composer on the screen
     const newComment = (e: MouseEvent) => {
       e.preventDefault();
 
-      // If already placed, click outside to close composer
       if (creatingCommentState === "placed") {
-        // check if the click event is on/inside the composer
         const isClickOnComposer = ((e as any)._savedComposedPath = e
           .composedPath()
           .some((el: any) => {
             return el.classList?.contains("lb-composer-editor-actions");
           }));
 
-        // if click is inisde/on composer, don't do anything
         if (isClickOnComposer) {
           return;
         }
 
-        // if click is outside composer, close composer
         if (!isClickOnComposer) {
           setCreatingCommentState("complete");
           return;
         }
       }
 
-      // First click sets composer down
       setCreatingCommentState("placed");
       setComposerCoords({
         x: e.clientX,
@@ -98,9 +81,7 @@ export const NewThread = ({ children }: Props) => {
   }, [creatingCommentState]);
 
   useEffect(() => {
-    // If dragging composer, update position
     const handlePointerMove = (e: PointerEvent) => {
-      // Prevents issue with composedPath getting removed
       (e as any)._savedComposedPath = e.composedPath();
       lastPointerEvent.current = e;
     };
@@ -195,15 +176,6 @@ export const NewThread = ({ children }: Props) => {
 
   return (
     <>
-      {/**
-       * Slot is used to wrap the children of the NewThread component
-       * to allow us to add a click event listener to the children
-       *
-       * Slot: https://www.radix-ui.com/primitives/docs/utilities/slot
-       *
-       * Disclaimer: We don't have to download this package specifically,
-       * it's already included when we install Shadcn
-       */}
       <Slot
         onClick={() =>
           setCreatingCommentState(
@@ -215,13 +187,7 @@ export const NewThread = ({ children }: Props) => {
         {children}
       </Slot>
 
-      {/* if composer coords exist and we're placing a comment, render the composer */}
       {composerCoords && creatingCommentState === "placed" ? (
-        /**
-         * Portal.Root is used to render the composer outside of the NewThread component to avoid z-index issuess
-         *
-         * Portal.Root: https://www.radix-ui.com/primitives/docs/utilities/portal
-         */
         <Portal.Root
           className="absolute left-0 top-0"
           style={{
@@ -234,7 +200,6 @@ export const NewThread = ({ children }: Props) => {
         </Portal.Root>
       ) : null}
 
-      {/* Show the customizing cursor when placing a comment. The one with comment shape */}
       <NewThreadCursor display={creatingCommentState === "placing"} />
     </>
   );

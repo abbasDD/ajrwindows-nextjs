@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { RightSidebarProps } from "@/types/canva-types";
 import { modifyShape } from "@/lib/shapes";
 import { PanelRightClose, PanelRightOpen } from "lucide-react";
@@ -10,7 +10,6 @@ import { Separator } from "@/components/ui/separator";
 
 import Text from "./settings/text";
 import Color from "./settings/color";
-import Export from "./settings/export";
 import Dimensions from "./settings/dimensions";
 import Share from "./settings/share";
 
@@ -26,6 +25,7 @@ const RightSidebar = ({
 
   const colorInputRef = useRef(null);
   const strokeInputRef = useRef(null);
+
   useEffect(() => {
     if (window.innerWidth >= 1024) {
       setIsOpen(true);
@@ -80,7 +80,7 @@ const RightSidebar = ({
       <Separator className="bg-primary-grey-200" />
 
       {isOpen && (
-        <ScrollArea className="flex-1">
+        <ScrollArea className="flex-1 overflow-y-auto">
           <div className="flex flex-col gap-y-2 p-4 pb-20">
             <Dimensions
               isEditingRef={isEditingRef}
@@ -116,8 +116,8 @@ const RightSidebar = ({
               handleInputChange={handleInputChange}
             />
 
-            <div className="flex flex-col mt-8">
-              <Export />
+            <div className="flex flex-col mt-2">
+              <h3 className="text-[10px] uppercase font-medium mb-2">Share</h3>
               <Share />
             </div>
           </div>

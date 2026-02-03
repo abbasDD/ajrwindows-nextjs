@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Globe, Copy, X, Loader2 } from "lucide-react";
+import { Globe, Copy, X, Loader2, Plus, Share2 } from "lucide-react";
 import { useUserStore } from "@/store/use-user-store";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
@@ -186,17 +186,26 @@ const Share = () => {
     }
   };
 
+  // handle copy link for specific users
+  const handleCopyLink = async (userId: string) => {
+    const url = new URL(roomUrl);
+    url.searchParams.set("userId", userId);
+    navigator.clipboard.writeText(url.toString());
+    toast.success("Link copied!");
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button disabled={!user} variant="outline">
+        <Button disabled={!user} variant="secondary">
+          <Share2 />
           Share
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#1E1E1E] border-none text-white max-w-md overflow-hidden">
-        <div className="p-4 flex flex-col gap-4">
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
+        <div className="pt-3 flex flex-col gap-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-sm font-medium">Share Room</h2>
+            <h2 className="text-base font-medium">Share Room</h2>
             <Button
               variant="ghost"
               size="sm"
@@ -206,14 +215,14 @@ const Share = () => {
                 toast.success("Link copied!");
               }}
             >
-              <Copy className="h-4 w-4 mr-2" /> Copy link
+              <Copy className="h-4 w-4 mr-1" /> Copy public link
             </Button>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-4">
             <Input
-              placeholder="Add emails..."
-              className="bg-[#2C2C2C] border-blue-500/50 text-sm h-10"
+              placeholder="Add emails (separated by commas)"
+              className="custom_input_fields"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleInvite()}
@@ -221,16 +230,22 @@ const Share = () => {
             />
             <Button
               onClick={handleInvite}
+              variant="outline"
               disabled={loading || !email}
-              className="bg-[#3C3C3C] text-gray-300"
+              className="h-auto w-24"
             >
-              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Add"}
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Plus />
+              )}{" "}
+              Add
             </Button>
           </div>
 
           <div className="mt-2">
             <p className="text-xs text-gray-500 font-semibold mb-4">
-              Who has access
+              Public access
             </p>
             {permissionsLoading ? (
               <div className="flex justify-center py-8">
@@ -238,7 +253,6 @@ const Share = () => {
               </div>
             ) : (
               <div className="space-y-4 max-h-[300px] overflow-y-auto">
-                {/* Public Access Row */}
                 <div className="flex items-center justify-between group">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
@@ -257,7 +271,7 @@ const Share = () => {
                         <SelectTrigger className="bg-transparent border-none text-xs text-gray-400 hover:text-white w-auto h-auto p-0">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-[#2C2C2C] border-gray-700">
+                        <SelectContent>
                           <SelectItem value="read-only">can view</SelectItem>
                           <SelectItem value="full">can edit</SelectItem>
                         </SelectContent>
@@ -282,8 +296,11 @@ const Share = () => {
                     )}
                   </div>
                 </div>
-
-                {/* Specific Users List */}
+                {privatePermissions.length > 0 && (
+                  <p className="text-xs text-gray-500 font-semibold mb-4">
+                    Specific users access
+                  </p>
+                )}
                 {privatePermissions.map((perm) => (
                   <div
                     key={perm.id}
@@ -300,6 +317,12 @@ const Share = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
+                      <p
+                        className="mx-1 text-xs cursor-pointer text-gray-400 hover:text-white"
+                        onClick={() => handleCopyLink(perm.id)}
+                      >
+                        copy link
+                      </p>
                       <Select
                         value={perm.access_level}
                         onValueChange={(v: "read-only" | "full") =>
@@ -309,11 +332,12 @@ const Share = () => {
                         <SelectTrigger className="bg-transparent border-none text-xs text-gray-400 hover:text-white w-auto h-auto p-0">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-[#2C2C2C] border-gray-700">
+                        <SelectContent>
                           <SelectItem value="read-only">can view</SelectItem>
                           <SelectItem value="full">can edit</SelectItem>
                         </SelectContent>
                       </Select>
+
                       <Button
                         variant="ghost"
                         size="icon"

@@ -14,7 +14,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 
-export const CartSheet = () => {
+export const CartSheet = ({ customIcon = false }: { customIcon?: boolean }) => {
   const { items, removeItem, clearCart, updateQuantity, getTotalPrice } =
     useCartStore();
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0);
@@ -22,14 +22,25 @@ export const CartSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="relative p-2 group transition-transform active:scale-95">
-          <ShoppingBag className="size-4 md:size-6 xl:size-7 text-white group-hover:text-secondary transition-colors" />
-          {itemCount > 0 && (
-            <span className="absolute top-0 right-0 size-4 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center animate-in zoom-in">
-              {itemCount}
-            </span>
-          )}
-        </button>
+        {customIcon ? (
+          <Button variant="outline" size="icon" className="relative">
+            <ShoppingBag />
+            {itemCount > 0 && (
+              <span className="grid place-items-center absolute -top-1 -right-1 size-4 bg-secondary text-black text-[8px] font-bold rounded-full  animate-in zoom-in">
+                {itemCount}
+              </span>
+            )}
+          </Button>
+        ) : (
+          <button className="relative p-2 group transition-transform active:scale-95">
+            <ShoppingBag className="size-4 md:size-6 xl:size-7 text-white group-hover:text-secondary transition-colors" />
+            {itemCount > 0 && (
+              <span className="absolute top-0 right-0 size-4 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center animate-in zoom-in">
+                {itemCount}
+              </span>
+            )}
+          </button>
+        )}
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-md flex flex-col p-0">
         <SheetHeader className="p-6 border-b border-white/5">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Plus, Minus, RotateCcw } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 import {
   useBroadcastEvent,
@@ -245,7 +245,7 @@ const Live = ({ canvasRef, undo, redo, fabricRef }: Props) => {
       >
         <canvas ref={canvasRef} />
 
-        <div className="absolute bottom-20 left-10 z-50 flex items-center gap-1 rounded-lg bg-card p-1.5 shadow-xl border border-primary-grey-100">
+        <div className="absolute bottom-24 left-10 z-50 flex items-center gap-1 rounded-lg bg-card p-1.5 shadow-xl border border-primary-grey-100">
           <button
             onClick={() => handleZoomChange("out")}
             className="p-2 hover:bg-primary-grey-200 rounded-md transition-all text-primary-grey-300"

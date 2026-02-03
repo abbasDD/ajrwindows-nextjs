@@ -30,10 +30,8 @@ export default async function OrderSuccessPage({ params }: Props) {
         id,
         quantity,
         price_at_purchase,
-        products (
-          product_name,
-          image_url
-        )
+        name,
+        image_url
       )
     `,
     )

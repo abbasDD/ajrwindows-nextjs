@@ -85,16 +85,16 @@ export const navElements = [
     name: "Glasses",
     value: glassElements,
   },
-  {
-    Icon: DoorOpen,
-    name: "Doors",
-    value: doorElements,
-  },
-  {
-    Icon: LayoutGrid,
-    name: "Windows",
-    value: windowElements,
-  },
+  // {
+  //   Icon: DoorOpen,
+  //   name: "Doors",
+  //   value: doorElements,
+  // },
+  // {
+  //   Icon: LayoutGrid,
+  //   name: "Windows",
+  //   value: windowElements,
+  // },
   {
     Icon: Square,
     name: "Rectangle",
@@ -114,11 +114,6 @@ export const navElements = [
     Icon: RotateCcw,
     value: "reset",
     name: "Reset",
-  },
-  {
-    Icon: MessageSquare,
-    value: "comments",
-    name: "Comments",
   },
 ];
 
@@ -250,4 +245,13 @@ export type AlignmentOption = {
   value: string;
   label: string;
   Icon: LucideIcon;
+};
+
+export const SHAPE_PRICES: Record<string, number> = {
+  rect: 50,
+  circle: 40,
+  line: 30,
+  path: 60,
+  triangle: 20,
+  image: 100,
 };

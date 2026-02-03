@@ -357,6 +357,7 @@ export const renderCanvas = ({
      *
      * enlivenObjects: http://fabricjs.com/docs/fabric.util.html#.enlivenObjectEnlivables
      */
+
     fabric.util.enlivenObjects(
       [objectData],
       (enlivenedObjects: fabric.Object[]) => {

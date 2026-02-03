@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import LayoutXSmall from "../layout/layout-x-small";
 import { useGetData } from "@/hooks/use-get-data";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 interface HeroSlide {
   id: string | number;
@@ -86,14 +87,15 @@ export default function HeroSection() {
             <p className="text-white/90 text-base lg:text-xl w-[90%] ">
               {activeSlide?.description}
             </p>
-
-            <Button
-              variant={"secondary"}
-              size={"lg"}
-              className="p-6 text-base font-medium"
-            >
-              Start Building
-            </Button>
+            <Link href="/custom-design">
+              <Button
+                variant={"secondary"}
+                size={"lg"}
+                className="p-6 text-base font-medium"
+              >
+                Start Building
+              </Button>
+            </Link>
           </motion.div>
         </AnimatePresence>
 

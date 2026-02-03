@@ -1,5 +1,6 @@
 import { Buckets } from "@/constant/constant";
 import { createClient } from "@/lib/supabase/client";
+import { decode } from "base64-arraybuffer";
 
 class UploadService {
   private static instance: UploadService;
@@ -33,7 +34,37 @@ class UploadService {
       .getPublicUrl(filePath);
     return urlData.publicUrl;
   }
-  async deleteFile(
+  public async uploadBase64OrReturnUrl(
+    imageString: string,
+    bucketName: (typeof Buckets)[keyof typeof Buckets],
+    path: string,
+  ): Promise<string> {
+    if (!imageString.startsWith("data:image")) {
+      return imageString;
+    }
+
+    try {
+      const base64Data = imageString?.split(",")[1];
+      const contentType = imageString?.split(";")[0]?.split(":")[1];
+      const fileName = `${crypto.randomUUID()}.png`;
+      const filePath = `${path}/${fileName}`;
+      const { error } = await this.supabase.storage
+        .from(bucketName)
+        .upload(filePath, decode(base64Data as string), {
+          contentType,
+          upsert: false,
+        });
+      if (error) throw error;
+      const { data: urlData } = this.supabase.storage
+        .from(bucketName)
+        .getPublicUrl(filePath);
+      return urlData.publicUrl;
+    } catch (err) {
+      console.error("Upload failed, returning original string:", err);
+      return imageString;
+    }
+  }
+  public async deleteFile(
     bucket: (typeof Buckets)[keyof typeof Buckets],
     filePath: string,
   ) {

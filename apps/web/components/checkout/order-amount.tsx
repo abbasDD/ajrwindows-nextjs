@@ -81,32 +81,37 @@ export const OrderAmount = ({
 
         <ScrollArea className="h-60 mb-6">
           {items.map((item) => (
-            <div key={item.id} className="flex gap-4 my-4 pr-6 relative">
-              <div className=" size-16 rounded-lg bg-white/10 overflow-hidden flex-shrink-0">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="object-cover w-full h-full"
-                />
-              </div>
+            <div
+              key={item.id}
+              className="flex justify-between gap-4 my-4 pr-6 relative"
+            >
+              <div className="flex-1 flex gap-4">
+                <div className="size-16 rounded-lg bg-white/10 overflow-hidden flex-shrink-0">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
 
-              <span className="absolute right-5 size-5 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium">{item.name}</p>
+                  <p className={`text-xs text-white/60 font-medium`}>
+                    {item.discounted_price! > 0 && (
+                      <span className="text-xs line-through mr-1">
+                        ${item.price}
+                      </span>
+                    )}
+                    $
+                    {item.discounted_price! > 0
+                      ? item.discounted_price
+                      : item.price}
+                  </p>
+                </div>
+              </div>
+              <span className="size-5 bg-secondary text-black text-[10px] font-bold rounded-full flex items-center justify-center">
                 {item.quantity}
               </span>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{item.name}</p>
-                <p className={`text-xs text-white/60 font-medium`}>
-                  {item.discounted_price! > 0 && (
-                    <span className="text-xs line-through mr-1">
-                      ${item.price}
-                    </span>
-                  )}
-                  $
-                  {item.discounted_price! > 0
-                    ? item.discounted_price
-                    : item.price}
-                </p>
-              </div>
             </div>
           ))}
         </ScrollArea>
@@ -164,7 +169,7 @@ export const OrderAmount = ({
               </span>
             </div>
           )}
-          <div className="flex justify-between text-xl font-bold text-white">
+          <div className="flex justify-between text-xl font-semibold text-white">
             <span>Total Amount</span>
             <span className="text-secondary">${finalTotal.toFixed(2)}</span>
           </div>

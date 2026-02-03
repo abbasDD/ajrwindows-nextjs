@@ -30,16 +30,13 @@ import {
 import Image from "next/image";
 import { toast } from "sonner";
 import { useUpdateById } from "@/hooks/use-update-data";
-import { useSWRConfig } from "swr";
 
 export default function OrderDetailsView({ orderId }: { orderId: string }) {
   const [isUpdating, setIsUpdating] = useState(false);
-  const { mutate } = useSWRConfig();
   const { data: order, isLoading: loadingOrder } = useGetDataById<OrderTypes>(
     "orders",
     orderId,
   );
-
   const { data: items, isLoading: loadingItems } = useGetDataByQuery<any>(
     "order_items",
     "order_id",
@@ -59,7 +56,11 @@ export default function OrderDetailsView({ orderId }: { orderId: string }) {
 
       await useUpdateById("orders", updatedFields, orderId);
       toast.success(`Delievery status updated to ${newStatus}`);
-      mutate([`admin-orders-${orderId}`]);
+      if (
+        newStatus === DeliveryStatus.CANCELLED ||
+        newStatus === DeliveryStatus.DELIVERED
+      )
+        window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("Failed to update status");
@@ -163,7 +164,7 @@ export default function OrderDetailsView({ orderId }: { orderId: string }) {
             </div>
 
             <div className="pt-4 border-t border-white/10">
-              <div className="flex justify-between items-center text-2xl font-black">
+              <div className="flex justify-between items-center text-xl font-semibold">
                 <span className="text-white">Total Revenue</span>
                 <span className="text-secondary">
                   ${order.total_amount?.toFixed(2)}

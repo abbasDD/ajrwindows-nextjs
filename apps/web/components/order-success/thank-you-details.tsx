@@ -80,15 +80,13 @@ const ThankYouDetails = ({ order }: ThankYouDetailsProps) => {
                 <div className="flex items-center gap-4">
                   <div className="relative size-16 rounded-lg overflow-hidden border border-white/10 bg-white/5">
                     <img
-                      src={item.products?.image_url}
-                      alt={item.products?.product_name}
+                      src={item?.image_url}
+                      alt={item?.name}
                       className="object-cover size-full"
                     />
                   </div>
                   <div>
-                    <p className="font-medium text-white">
-                      {item.products?.product_name}
-                    </p>
+                    <p className="font-medium text-white">{item?.name}</p>
                     <p className="text-sm text-muted-foreground">
                       Qty: {item.quantity}
                     </p>

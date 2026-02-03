@@ -9,6 +9,8 @@ import ShapesMenu from "./shapes-menu";
 import ActiveUsers from "./users/active-users";
 import { NewThread } from "./comments/new-thread";
 import { useSelf } from "@/liveblocks.config";
+import { CartSheet } from "@/components/cart/cart-sheet";
+import { useUserStore } from "@/store/use-user-store";
 
 const Navbar = ({
   activeElement,
@@ -18,13 +20,14 @@ const Navbar = ({
 }: NavbarProps) => {
   const self = useSelf();
   const canWrite = self?.canWrite ?? true;
+  const { user } = useUserStore();
   const isActive = (value: string | Array<ActiveElement>) =>
     (activeElement && activeElement.value === value) ||
     (Array.isArray(value) &&
       value.some((val) => val?.value === activeElement?.value));
 
   return (
-    <nav className="flex select-none items-center justify-between gap-4 border-b border-secondary/20 bg-primary px-5 text-white">
+    <nav className="flex select-none items-center  justify-between gap-4 border-b border-secondary/20 bg-primary px-5 text-white">
       <Image src="/logo.png" alt="FigPro Logo" width={35} height={20} />
 
       <ul className="flex flex-row">
@@ -50,14 +53,6 @@ const Navbar = ({
                   handleActiveElement={handleActiveElement}
                   handleImageUpload={handleImageUpload}
                 />
-              ) : item?.value === "comments" ? (
-                <NewThread>
-                  <Button disabled={!canWrite} size={"icon"}>
-                    <Icon
-                      className={`w-5 h-5 ${active ? "text-secondary" : ""}`}
-                    />
-                  </Button>
-                </NewThread>
               ) : (
                 <Button disabled={!canWrite} size={"icon"}>
                   <Icon
@@ -69,8 +64,10 @@ const Navbar = ({
           );
         })}
       </ul>
-
-      <ActiveUsers />
+      <div className="flex items-center gap-1">
+        {user && canWrite && <CartSheet customIcon />}
+        <ActiveUsers />
+      </div>
     </nav>
   );
 };

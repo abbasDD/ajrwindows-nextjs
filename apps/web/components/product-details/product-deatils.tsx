@@ -42,7 +42,6 @@ const ProductDetails = ({
     (product) => (product?.id as string) !== initialProduct.id,
   );
   const addItem = useCartStore((state) => state.addItem);
-  console.log(initialProduct.category_id);
   const handleAddToCart = () => {
     if (!user) {
       toast.error("Authentication Required", {
@@ -120,21 +119,13 @@ const ProductDetails = ({
             {initialProduct.description}
           </p>
 
-          <div className="flex gap-4 pt-4 max-sm:flex-col">
-            <Button
-              onClick={handleAddToCart}
-              variant="secondary"
-              className="flex-1 h-12 rounded-xl font-bold hover:scale-[1.02] transition-transform"
-            >
-              <ShoppingBasket className="mr-2" size={20} /> Add to Cart
-            </Button>
-            <Button
-              variant="outline"
-              className="flex-1 h-12 rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10"
-            >
-              Customize
-            </Button>
-          </div>
+          <Button
+            onClick={handleAddToCart}
+            variant="secondary"
+            className="sm:w-1/2 h-12 rounded-xl font-bold hover:scale-[1.02] transition-transform"
+          >
+            <ShoppingBasket className="mr-2" size={20} /> Add to Cart
+          </Button>
         </div>
       </div>
       {initialFaqs.length > 0 && (

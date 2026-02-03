@@ -88,11 +88,54 @@ const CustomDesignCom = () => {
     if (!object) return;
     const { objectId } = object;
 
-    const shapeData = object.toJSON();
+    const shapeData = object.toJSON([
+      "objectId",
+      "customType",
+      "lockMovementX",
+      "lockMovementY",
+      "lockRotation",
+      "lockScalingX",
+      "lockScalingY",
+      "hasControls",
+      "selectable",
+    ]);
     shapeData.objectId = objectId;
 
     const canvasObjects = storage.get("canvasObjects");
     canvasObjects.set(objectId, shapeData);
+  }, []);
+  const toggleLock = useMutation(({ storage }, shapeId: string) => {
+    const canvasObjects = storage.get("canvasObjects");
+    const shape = canvasObjects.get(shapeId) as any;
+
+    if (!shape) return;
+
+    const isLocked = !shape.lockMovementX;
+
+    canvasObjects.set(shapeId, {
+      ...shape,
+      lockMovementX: isLocked,
+      lockMovementY: isLocked,
+      lockRotation: isLocked,
+      lockScalingX: isLocked,
+      lockScalingY: isLocked,
+      hasControls: !isLocked, // Hide controls when locked
+    });
+
+    const activeObject = fabricRef.current
+      ?.getObjects()
+      .find((obj: any) => obj.objectId === shapeId);
+    if (activeObject) {
+      activeObject.set({
+        lockMovementX: isLocked,
+        lockMovementY: isLocked,
+        lockRotation: isLocked,
+        lockScalingX: isLocked,
+        lockScalingY: isLocked,
+        hasControls: !isLocked,
+      });
+      fabricRef.current?.renderAll();
+    }
   }, []);
 
   const handleActiveElement = (elem: ActiveElement) => {
@@ -249,7 +292,6 @@ const CustomDesignCom = () => {
       );
     };
   }, [canvasRef]);
-
   useEffect(() => {
     renderCanvas({
       fabricRef,
@@ -278,7 +320,10 @@ const CustomDesignCom = () => {
 
       <section className="flex h-full flex-row">
         <SidebarProvider>
-          <LeftSidebar allShapes={Array.from(canvasObjects)} />
+          <LeftSidebar
+            toggleLock={toggleLock}
+            allShapes={Array.from(canvasObjects)}
+          />
 
           <Live
             canvasRef={canvasRef}

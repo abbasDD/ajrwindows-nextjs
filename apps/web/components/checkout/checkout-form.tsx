@@ -27,6 +27,8 @@ import { createClient } from "@/lib/supabase/client";
 import { PayPalModal } from "./paypal-modal";
 import { PromoCodeTypes } from "@/types/product-types";
 import { calculateOrderTotals } from "@/lib/cart-calculation";
+import { bucket } from "@/services/upload.service";
+import { Buckets } from "@/constant/constant";
 
 const CheckoutForm = ({
   appliedPromo,
@@ -67,7 +69,7 @@ const CheckoutForm = ({
     items,
     appliedPromo,
   );
-
+  console.log(items);
   async function onSubmit(values: OrderFormValues) {
     if (!user) {
       toast.error("Please login to place an order");
@@ -102,14 +104,23 @@ const CheckoutForm = ({
         throw new Error(orderError.message);
       }
 
-      const orderItems = items.map((item) => ({
-        order_id: orderData.id,
-        product_id: item.id,
-        quantity: item.quantity,
-        price_at_purchase: item.price,
-        image_url: item.image,
-        name: item.name,
-      }));
+      const orderItems = await Promise.all(
+        items.map(async (item) => {
+          const finalImageUrl = await bucket.uploadBase64OrReturnUrl(
+            item.image,
+            Buckets.PRODUCTS,
+            "custom-orders",
+          );
+          return {
+            order_id: orderData.id,
+            product_id: item.id,
+            quantity: item.quantity,
+            price_at_purchase: item.price,
+            image_url: finalImageUrl,
+            name: item.name,
+          };
+        }),
+      );
 
       const { error: itemsError } = await supabase
         .from("order_items")
