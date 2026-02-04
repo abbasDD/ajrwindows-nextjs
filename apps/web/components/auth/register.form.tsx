@@ -17,7 +17,6 @@ import { PhoneInput } from "../ui/phone-input";
 import { useState } from "react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
-import { mutation } from "@/services/mutation.service";
 import { Eye, EyeOff } from "lucide-react";
 
 const RegisterForm = () => {
@@ -43,32 +42,42 @@ const RegisterForm = () => {
     setLoading(true);
     const toastId = toast.loading("Please wait ...");
     try {
-      const { data: authData, error } = await supabase.auth.signUp({
+      const { data: alreadyExists, error: rpcError } = await supabase.rpc(
+        "check_if_email_exists",
+        { email_input: values.email },
+      );
+      if (rpcError) throw new Error("Connection error while checking email.");
+      if (alreadyExists) {
+        throw new Error("Email already exists in our system.");
+      }
+      const { error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
+        options: {
+          data: {
+            username: values.username,
+            phone: values.phone,
+          },
+        },
       });
-
       if (error) throw new Error(error.message);
-
-      const userData = {
-        id: authData?.user?.id,
-        username: values.username,
-        phone: values.phone,
-        role: "user",
-      };
-
-      await mutation.insertOne("users", userData);
-
       form.reset();
-      toast.success("Register successful", {
+      toast.success("Success!", {
         description: (
           <p className="italic">
-            Please check your email for verification link
+            🎉 Congratulations! Your registration was successful.
           </p>
         ),
       });
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Something went wrong");
+    } catch (e: any) {
+      console.log(e);
+      const errorMessage = e.message || "An unexpected error occurred.";
+      toast.error("Failed to register", {
+        className: "!text-red-500",
+        description: (
+          <p className="text-sm text-red-400 italic">{errorMessage}</p>
+        ),
+      });
     } finally {
       setLoading(false);
       toast.dismiss(toastId);

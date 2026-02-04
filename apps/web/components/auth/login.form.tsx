@@ -48,19 +48,8 @@ const LoginForm = ({
         toast.dismiss(loadingId);
         throw new Error(authError?.message || "Invalid credentials");
       }
-      const userId = authData.user.id;
-      const { data: profile, error: profileError } = await supabase
-        .from("users")
-        .select("role")
-        .eq("id", userId)
-        .single();
 
-      if (profileError || profile?.role !== "user") {
-        toast.dismiss(loadingId);
-        await supabase.auth.signOut();
-        throw new Error(profileError?.message || "Invalid credentials");
-      }
-
+      form.reset();
       toast.dismiss(loadingId);
       toast.success("Login successful");
       setOpen(false);
@@ -69,7 +58,6 @@ const LoginForm = ({
         className: "!text-red-500",
       });
     } finally {
-      form.reset();
       setLoading(false);
       toast.dismiss(loadingId);
     }
