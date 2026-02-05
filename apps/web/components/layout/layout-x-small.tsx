@@ -7,7 +7,9 @@ type Props = {
 
 function LayoutXSmall({ children, className }: Props) {
   return (
-    <div className={cn("px-6 sm:px-14 lg:px-32", className)}>{children}</div>
+    <div className={cn("px-6 sm:px-14 lg:px-24 xl:px-32", className)}>
+      {children}
+    </div>
   );
 }
 export default LayoutXSmall;

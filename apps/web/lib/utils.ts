@@ -11,13 +11,13 @@ import {
   Image,
   PenTool,
   Type,
+  Hexagon,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-// time stamps to date using date-fns
 export function formatTimestamp(
   timestamp: Date | string,
   dateFormat: string = "yyyy-MM-dd",
@@ -42,7 +42,6 @@ export function getPathFromPublicUrl(
   if (!u.pathname.startsWith(prefix)) throw new Error("Invalid file URL");
   return u.pathname.replace(prefix, "");
 }
-// get initlal first two strings from username
 export function getInitials(username: string) {
   if (!username) return "";
   const initials = username
@@ -51,8 +50,6 @@ export function getInitials(username: string) {
     ?.join("");
   return initials;
 }
-
-// CANVAS
 
 const adjectives = [
   "Happy",
@@ -107,6 +104,11 @@ export const getShapeInfo = (
       return {
         Icon: Circle,
         name: "Circle",
+      };
+    case "polygon":
+      return {
+        Icon: Hexagon,
+        name: "Polygon",
       };
     case "triangle":
       return {

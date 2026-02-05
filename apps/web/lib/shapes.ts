@@ -93,7 +93,24 @@ export const createRectangle = (pointer: PointerEvent) => {
 
   return rect;
 };
-
+export const createPolygon = (pointer: PointerEvent) => {
+  const points = [
+    { x: 50, y: 0 },
+    { x: 100, y: 30 },
+    { x: 100, y: 80 },
+    { x: 50, y: 110 },
+    { x: 0, y: 80 },
+    { x: 0, y: 30 },
+  ];
+  return new fabric.Polygon(points, {
+    left: pointer.x,
+    top: pointer.y,
+    fill: "#aabbcc",
+    stroke: "#222",
+    strokeWidth: 2,
+    objectId: uuidv4(),
+  } as CustomFabricObject<fabric.Polygon>);
+};
 export const createTriangle = (pointer: PointerEvent) => {
   return new fabric.Triangle({
     left: pointer.x,
@@ -145,7 +162,8 @@ export const createSpecificShape = (
   switch (shapeType) {
     case "rectangle":
       return createRectangle(pointer);
-
+    case "polygon":
+      return createPolygon(pointer);
     case "triangle":
       return createTriangle(pointer);
 

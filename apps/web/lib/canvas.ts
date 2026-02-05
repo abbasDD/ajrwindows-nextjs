@@ -135,7 +135,12 @@ export const handleCanvaseMouseMove = ({
         height: pointer.y - (shapeRef.current?.top || 0),
       });
       break;
-
+    case "polygon":
+      shapeRef.current?.set({
+        width: Math.abs(pointer.x - (shapeRef.current?.left || 0)),
+        height: Math.abs(pointer.y - (shapeRef.current?.top || 0)),
+      });
+      break;
     case "circle":
       shapeRef.current.set({
         radius: Math.abs(pointer.x - (shapeRef.current?.left || 0)) / 2,

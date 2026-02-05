@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useSelf } from "@/liveblocks.config";
+import { Badge } from "@/components/ui/badge";
+import { SHAPE_PRICES } from "@/constant/canva";
 
 const ShapesMenu = ({
   item,
@@ -45,7 +47,7 @@ const ShapesMenu = ({
           {item.value.map((elem) => {
             const Icon = elem?.Icon;
             const isActive = activeElement.value === elem?.value;
-
+            const price = SHAPE_PRICES[elem?.value as string];
             return (
               <Button
                 key={elem?.name}
@@ -54,20 +56,19 @@ const ShapesMenu = ({
                 }}
                 className="flex h-fit justify-between bg-transparent gap-10 rounded-none px-5 py-3 focus:border-none w-full"
               >
-                <div className="group flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   {Icon && (
                     <Icon
-                      className={`w-5 h-5 ${isActive ? "text-secondary" : ""}`}
+                      className={`w-5 h-5 ${isActive ? "text-primary" : "text-muted-foreground"}`}
                     />
                   )}
                   <p
-                    className={`text-sm ${
-                      isActive ? "text-secondary" : "text-white"
-                    }`}
+                    className={`text-sm font-medium ${isActive ? "text-primary" : "text-foreground"}`}
                   >
                     {elem?.name}
                   </p>
                 </div>
+                <Badge variant={"outline"}>${price}</Badge>
               </Button>
             );
           })}

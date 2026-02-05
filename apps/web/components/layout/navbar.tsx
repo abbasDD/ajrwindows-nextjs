@@ -53,7 +53,7 @@ const UserNav = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="outline-none">
-          <Avatar className="size-8 md:size-10 xl:size-12 border-2 border-secondary transition-transform hover:scale-105">
+          <Avatar className="size-8 md:size-10 xl:size-11 border-2 border-secondary transition-transform hover:scale-105">
             <AvatarFallback className="cursor-pointer bg-secondary text-black font-bold">
               {getInitials(user?.email ?? "")}
             </AvatarFallback>

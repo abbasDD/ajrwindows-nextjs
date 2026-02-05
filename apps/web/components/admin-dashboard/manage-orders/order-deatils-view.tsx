@@ -137,14 +137,14 @@ export default function OrderDetailsView({ orderId }: { orderId: string }) {
             </div>
 
             <div className="flex justify-between items-center text-sm px-1">
-              <span className="text-white/50">Placement Date</span>
+              <span className="text-white/80">Placement Date</span>
               <span className="text-white font-medium">
                 {formatTimestamp(order.created_at as string)}
               </span>
             </div>
 
             <div className="flex justify-between items-center text-sm px-1">
-              <span className="text-white/50">Payment Status</span>
+              <span className="text-white/80">Payment Status</span>
               <Badge
                 className={
                   order.payment_status === Statues.PAID
@@ -157,10 +157,10 @@ export default function OrderDetailsView({ orderId }: { orderId: string }) {
             </div>
 
             <div className="flex justify-between items-center text-sm px-1">
-              <span className="text-white/50">Payment Method</span>
-              <span className="text-white font-bold uppercase tracking-tighter text-xs">
-                {order.payment_method}
-              </span>
+              <span className="text-white/80">Payment Method</span>
+              <Badge variant={"outline"}>
+                {order.payment_method?.toUpperCase()}
+              </Badge>
             </div>
 
             <div className="pt-4 border-t border-white/10">
@@ -182,29 +182,28 @@ export default function OrderDetailsView({ orderId }: { orderId: string }) {
           </CardHeader>
           <CardContent className="pt-6 space-y-6">
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl border border-white/10 text-white/60">
+              <div className="p-3 rounded-xl border border-white/10 text-white/80">
                 <User size={22} />
               </div>
               <div>
-                <p className="text-white text-lg font-bold">
+                <p className="text-base font-bold capitalize mb-1">
                   {order.full_name}
                 </p>
-                <p className="text-white/40 text-sm">{order.email}</p>
-                <p className="text-white/40 text-sm">{order.phone}</p>
+                <p className="text-white/80 text-sm">{order.email}</p>
+                <p className="text-white/80 text-sm">{order.phone}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4 pt-4 border-t border-white/5">
-              <div className="p-3 rounded-xl border border-white/10 text-white/60">
+              <div className="p-3 rounded-xl border border-white/10 text-white/80">
                 <MapPin size={22} />
               </div>
               <div>
-                <p className="text-white/50 text-[10px] uppercase font-black mb-1">
+                <p className="text-base font-bold  mb-1">
                   Shipping Destination
                 </p>
-                <p className="text-base text-white/80 leading-relaxed">
-                  {order.address}, {order.area}
-                  {order.city}, {order.zipcode}
+                <p className="text-base text-white/80 leading-relaxed space-x-1">
+                  {order.address}, {order.area} {order.city}, {order.zipcode}{" "}
                   {order.country}
                 </p>
               </div>
@@ -256,7 +255,7 @@ export default function OrderDetailsView({ orderId }: { orderId: string }) {
                       <span className="text-white font-bold text-base leading-none">
                         {item.name || "Product Name"}
                       </span>
-                      <span className="text-[10px] text-white/30 font-mono uppercase tracking-widest">
+                      <span className="text-[10px] text-white/50 font-mono uppercase tracking-widest">
                         Ref: {item.product_id.slice(0, 8)}
                       </span>
                     </div>

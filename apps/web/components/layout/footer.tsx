@@ -21,7 +21,7 @@ const Footer = () => {
   const { data: contactData } = useGetData<any>("settings_contact_details");
 
   const quicklinks = [
-    { name: "Design Center", path: "/customdoor" },
+    { name: "Design Center", path: "/custom-design" },
     { name: "Shop", path: "/categories" },
     { name: "About Us", path: "/about" },
     { name: "Contact Us", path: "/contact" },

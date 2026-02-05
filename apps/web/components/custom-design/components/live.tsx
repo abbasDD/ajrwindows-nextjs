@@ -19,7 +19,6 @@ import {
 } from "@/types/canva-types";
 import { shortcuts } from "@/constant/canva";
 
-import { Comments } from "./comments/comments";
 import {
   CursorChat,
   FlyingReaction,
@@ -289,7 +288,6 @@ const Live = ({ canvasRef, undo, redo, fabricRef }: Props) => {
         )}
 
         <LiveCursors others={others} />
-        <Comments />
       </ContextMenuTrigger>
 
       <ContextMenuContent className="right-menu-content ">

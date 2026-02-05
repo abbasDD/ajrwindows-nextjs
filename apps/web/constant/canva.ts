@@ -9,7 +9,6 @@ import {
   Type,
   Trash2,
   RotateCcw,
-  MessageSquare,
   ArrowUpToLine,
   ArrowDownToLine,
   AlignLeft,
@@ -21,6 +20,7 @@ import {
   LayoutGrid,
   Glasses,
   GlassesIcon,
+  Hexagon,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
@@ -36,6 +36,11 @@ export const shapeElements = [
     Icon: Circle,
     name: "Circle",
     value: "circle",
+  },
+  {
+    Icon: Hexagon,
+    name: "Polygon",
+    value: "polygon",
   },
   {
     Icon: Triangle,
@@ -202,21 +207,16 @@ export const alignmentOptions = [
 export const shortcuts = [
   {
     key: "1",
-    name: "Chat",
-    shortcut: "/",
-  },
-  {
-    key: "2",
     name: "Undo",
     shortcut: "⌘ + Z",
   },
   {
-    key: "3",
+    key: "2",
     name: "Redo",
     shortcut: "⌘ + Y",
   },
   {
-    key: "4",
+    key: "3",
     name: "Reactions",
     shortcut: "E",
   },
@@ -249,9 +249,14 @@ export type AlignmentOption = {
 
 export const SHAPE_PRICES: Record<string, number> = {
   rect: 50,
+  rectangle: 50,
+  freeform: 50,
   circle: 40,
   line: 30,
   path: 60,
   triangle: 20,
+  polygon: 30,
   image: 100,
+  glass1: 120,
+  glass2: 120,
 };

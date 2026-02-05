@@ -68,11 +68,11 @@ const ProductDetails = ({
   const categoryName = initialProduct.categories?.category || "COLLECTION";
 
   return (
-    <div className="px-6 py-12 animate-in fade-in duration-500">
+    <div className="px-6 pt-10 pb-12 animate-in fade-in duration-500">
       <Button
         variant="ghost"
         onClick={() => router.back()}
-        className="group mb-8 text-white/40 hover:text-white p-0 hover:bg-transparent"
+        className="group mb-20 text-white/80 hover:text-white p-0 hover:bg-transparent"
       >
         <ArrowLeft
           className="mr-2 group-hover:-translate-x-1 transition-transform"

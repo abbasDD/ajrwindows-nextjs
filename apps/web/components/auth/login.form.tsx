@@ -16,6 +16,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const LoginForm = ({
   handleChangeType,
@@ -24,6 +25,7 @@ const LoginForm = ({
   handleChangeType: (type: any) => void;
   setOpen: (open: boolean) => void;
 }) => {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -48,11 +50,22 @@ const LoginForm = ({
         toast.dismiss(loadingId);
         throw new Error(authError?.message || "Invalid credentials");
       }
+      const userId = authData.user.id;
+      const { data: profile } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", userId)
+        .single();
 
       form.reset();
-      toast.dismiss(loadingId);
       toast.success("Login successful");
+      toast.dismiss(loadingId);
       setOpen(false);
+
+      if (profile && profile?.role === "admin") {
+        toast.dismiss(loadingId);
+        return router.push("/admin/dashboard");
+      }
     } catch (err: any) {
       toast.error(err.message || "Something went wrong", {
         className: "!text-red-500",

@@ -288,6 +288,17 @@ const CreateProductForm = ({ productId }: { productId?: string }) => {
               )}
             />
           </div>
+          {selectedCategoryId && filteredProductTypes.length === 0 && (
+            <div className="mt-4 rounded-lg border border-destructive/20 bg-destructive/5 p-4">
+              <p className="text-sm font-medium text-destructive italic">
+                No product types found for this category.
+              </p>
+              <p className="text-sm text-muted-foreground mt-2 italic">
+                Please select a different category or add a new product type to
+                this category to proceed.
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="space-y-6">

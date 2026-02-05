@@ -70,7 +70,7 @@ export default function HeroSection() {
         />
       </AnimatePresence>
 
-      <div className="pl-6 sm:pl-14 lg:pl-32 relative z-20 h-full pt-20 lg:w-1/2 flex flex-col justify-center bg-primary/50">
+      <div className="pl-6 sm:pl-14 lg:pl-24 xl:pl-32 relative z-20 h-full pt-20 lg:w-1/2 flex flex-col justify-center bg-primary/50">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeSlide?.id}

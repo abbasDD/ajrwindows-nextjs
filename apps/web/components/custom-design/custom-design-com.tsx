@@ -119,7 +119,7 @@ const CustomDesignCom = () => {
       lockRotation: isLocked,
       lockScalingX: isLocked,
       lockScalingY: isLocked,
-      hasControls: !isLocked, // Hide controls when locked
+      hasControls: !isLocked,
     });
 
     const activeObject = fabricRef.current

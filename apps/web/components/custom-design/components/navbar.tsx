@@ -7,7 +7,6 @@ import { ActiveElement, NavbarProps } from "@/types/canva-types";
 import { Button } from "@/components/ui/button";
 import ShapesMenu from "./shapes-menu";
 import ActiveUsers from "./users/active-users";
-import { NewThread } from "./comments/new-thread";
 import { useSelf } from "@/liveblocks.config";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { useUserStore } from "@/store/use-user-store";
