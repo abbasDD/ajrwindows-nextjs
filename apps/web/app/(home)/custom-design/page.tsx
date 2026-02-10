@@ -5,11 +5,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "AJR Custom Design ",
-  description:
-    "A minimalist Figma clone using fabric.js and Liveblocks for real-time collaboration",
+  description: "Ajr custom design page",
 };
 
-const Page = ({ children }: { children: React.ReactNode }) => (
+const Page = () => (
   <div>
     <Room>
       <TooltipProvider>

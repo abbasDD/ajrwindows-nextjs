@@ -46,8 +46,8 @@ const CheckoutForm = ({
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderSchema),
     defaultValues: {
-      name: user?.email?.split("@")[0] || "",
-      email: user?.email || "",
+      name: "",
+      email: "",
       phone: "",
       country: "Canada",
       city: "",

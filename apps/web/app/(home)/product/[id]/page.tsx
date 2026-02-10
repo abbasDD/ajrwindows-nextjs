@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return { title: "Product Not Found" };
 
   return {
-    title: `${product.product_name} | Your Brand`,
+    title: `${product.product_name} | Ajr Product`,
     description: product.description,
   };
 }

@@ -26,7 +26,7 @@ export default function CheckoutCom() {
             Add some luxury items to your cart before checking out.
           </p>
         </div>
-        <Link href="/shop">
+        <Link href="/categories">
           <button className="bg-secondary text-black px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform">
             Return to Shop
           </button>
@@ -37,13 +37,13 @@ export default function CheckoutCom() {
 
   return (
     <>
-      <div className="mb-12">
+      <div className="mb-12 pt-36">
         <Link
           href="/cart"
-          className="flex items-center gap-2 text-white/40 hover:text-secondary transition-colors mb-4 group"
+          className="w-fit flex items-center gap-2 text-white/80 hover:text-secondary transition-colors mb-8  text-sm group"
         >
           <ArrowLeft
-            size={18}
+            size={16}
             className="group-hover:-translate-x-1 transition-transform"
           />
           Back to Cart

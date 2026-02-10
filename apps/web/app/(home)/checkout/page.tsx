@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const CheckoutPage = () => {
   return (
     <PublicLayout>
-      <LayoutXSmall className="min-h-screen mt-40">
+      <LayoutXSmall className="min-h-screen">
         <CheckoutCom />
       </LayoutXSmall>
     </PublicLayout>

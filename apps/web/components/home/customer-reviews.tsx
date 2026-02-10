@@ -101,9 +101,6 @@ const MarqueeColumn = ({
                   <h4 className="text-white font-bold text-sm tracking-tight leading-none">
                     {item.name}
                   </h4>
-                  <span className="text-primary text-[10px] font-bold uppercase tracking-widest mt-1.5">
-                    Verified Partner
-                  </span>
                 </div>
               </div>
 

@@ -12,7 +12,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   return {
-    title: `Order Success #${id.slice(0, 8)} | Your Brand`,
+    title: `Order Success #${id.slice(0, 8)} | Ajr Windows`,
     description: "Thank you for your purchase!",
   };
 }

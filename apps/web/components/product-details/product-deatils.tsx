@@ -72,7 +72,7 @@ const ProductDetails = ({
       <Button
         variant="ghost"
         onClick={() => router.back()}
-        className="group mb-20 text-white/80 hover:text-white p-0 hover:bg-transparent"
+        className="text-secondary group mb-24  hover:text-white p-0 hover:bg-transparent"
       >
         <ArrowLeft
           className="mr-2 group-hover:-translate-x-1 transition-transform"
@@ -129,7 +129,7 @@ const ProductDetails = ({
         </div>
       </div>
       {initialFaqs.length > 0 && (
-        <div className="my-28 mx-auto max-w-4xl">
+        <div className="mt-32 mx-auto max-w-4xl">
           <h3 className="text-xl font-medium mb-6 tracking-wide">FAQs</h3>
           <Accordion type="single" collapsible className="w-full space-y-2">
             {initialFaqs.map((faq) => (
@@ -150,7 +150,7 @@ const ProductDetails = ({
         </div>
       )}
       {releatedProducts && releatedProducts?.length > 0 && (
-        <div>
+        <div className="mt-32">
           <h1 className="text-xl font-medium mb-6 tracking-wide">
             Releated Products
           </h1>
