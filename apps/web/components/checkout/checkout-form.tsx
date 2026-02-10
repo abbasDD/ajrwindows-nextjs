@@ -192,7 +192,11 @@ const CheckoutForm = ({
                   <FormItem>
                     <FormLabel className="text-white/60">Phone</FormLabel>
                     <FormControl>
-                      <PhoneInput placeholder="Phone Number" {...field} />
+                      <PhoneInput
+                        defaultCountry="CA"
+                        placeholder="Phone Number"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

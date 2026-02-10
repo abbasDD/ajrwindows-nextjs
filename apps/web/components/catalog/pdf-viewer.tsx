@@ -25,6 +25,19 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 const pdfPath = "/Coverdoors.pdf";
 
+// loading component
+const PageSkeleton = ({ scale }: { scale: number }) => (
+  <div
+    style={{ width: 600 * scale, height: 800 * scale }}
+    className="animate-pulse rounded-lg flex flex-col items-center justify-center border bg-zinc-900/5"
+  >
+    <Loader2 className="w-8 h-8 animate-spin text-zinc-500" />
+    <p className="mt-2 text-sm text-zinc-500 font-medium">
+      Please wait page is loading..
+    </p>
+  </div>
+);
+
 function NavButton({
   onClick,
   disabled,
@@ -62,7 +75,7 @@ function NavButton({
 export default function PDFViewer() {
   const [numPages, setNumPages] = useState<number>();
   const [leftPage, setLeftPage] = useState<number>(1);
-  const [scale, setScale] = useState<number>(0.6); // Start with a reasonable base
+  const [scale, setScale] = useState<number>(0.6);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -130,7 +143,6 @@ export default function PDFViewer() {
             : "min-h-screen bg-transparent py-12"
         }`}
       >
-        {/* Toolbar */}
         <div className="z-50 mb-6 flex items-center max-sm:flex-col gap-2 bg-white/10 backdrop-blur-xl border border-white/20 p-2 rounded-2xl shadow-2xl">
           <div className="flex items-center gap-1 pr-2 sm:border-r border-white/10">
             <NavButton
@@ -179,19 +191,17 @@ export default function PDFViewer() {
           </div>
         </div>
 
-        {/* PDF Area */}
         <div className="relative flex flex-1 items-center justify-center w-full overflow-auto custom-scrollbar">
-          {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-zinc-900/5 animate-pulse z-10">
-              <Loader2 className="w-10 h-10 animate-spin text-primary" />
-            </div>
-          )}
-
           <Document
             file={pdfPath}
             onLoadSuccess={onDocumentLoadSuccess}
             className="flex flex-col items-center"
-            loading={null}
+            loading={
+              <div className="flex flex-col items-center gap-2">
+                <Loader2 className="w-10 h-10 animate-spin text-zinc-500" />
+                <p className="text-zinc-500 text-sm">Loading Document...</p>
+              </div>
+            }
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -204,20 +214,20 @@ export default function PDFViewer() {
               >
                 <Page
                   pageNumber={leftPage}
-                  scale={scale} // <--- THIS FIXED THE ZOOM
+                  scale={scale}
                   renderAnnotationLayer={false}
                   renderTextLayer={false}
                   className="bg-white shadow-lg"
-                  loading={null}
+                  loading={<PageSkeleton scale={scale} />}
                 />
                 {rightPage && (
                   <Page
                     pageNumber={rightPage}
-                    scale={scale} // <--- THIS FIXED THE ZOOM
+                    scale={scale}
                     renderAnnotationLayer={false}
                     renderTextLayer={false}
                     className="bg-white border-l border-zinc-200 shadow-lg"
-                    loading={null}
+                    loading={<PageSkeleton scale={scale} />}
                   />
                 )}
               </motion.div>

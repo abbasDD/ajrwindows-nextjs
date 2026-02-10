@@ -146,6 +146,7 @@ const RegisterForm = () => {
                   placeholder="Enter your phone"
                   {...field}
                   className="text-xl!"
+                  defaultCountry="CA"
                 />
               </FormControl>
               <FormMessage />
