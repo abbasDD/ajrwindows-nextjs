@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { LoaderCircle, Plus } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 
 import {
   Dialog,
@@ -165,10 +165,8 @@ const AddCategories = ({ open, setOpen, initialData }: Props) => {
                 variant="secondary"
                 className="w-full"
               >
-                {loading ? (
+                {loading && (
                   <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Plus className="mr-2 h-4 w-4" />
                 )}
                 {initialData ? "Edit" : "Add"} Category
               </Button>

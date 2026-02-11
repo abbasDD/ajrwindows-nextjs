@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle, Plus } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -194,11 +194,7 @@ const AddProductType = ({ open, setOpen, initialData }: Props) => {
                 variant="secondary"
                 className="w-full"
               >
-                {loading ? (
-                  <LoaderCircle className="animate-spin mr-2" />
-                ) : initialData ? null : (
-                  <Plus className="mr-2" />
-                )}
+                {loading && <LoaderCircle className="animate-spin mr-2" />}
                 {initialData ? "Update" : "Add"} Product Type
               </Button>
             </DialogFooter>

@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { CalendarIcon, Edit, LoaderCircle, Plus } from "lucide-react";
+import { CalendarIcon, Edit, LoaderCircle } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -124,14 +124,7 @@ export function PromoCodeDialog({ initialData }: { initialData?: any }) {
             if (!initialData) form.reset();
           }}
         >
-          {initialData ? (
-            <Edit className="h-4 w-4" />
-          ) : (
-            <>
-              <Plus className="mr-2 h-4 w-4" />
-              Add New Promo Code
-            </>
-          )}
+          {initialData ? <Edit className="h-4 w-4" /> : <>Add New Promo Code</>}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
@@ -319,11 +312,7 @@ export function PromoCodeDialog({ initialData }: { initialData?: any }) {
                 variant="secondary"
                 className="w-full"
               >
-                {loading ? (
-                  <LoaderCircle className="animate-spin" />
-                ) : initialData ? null : (
-                  <Plus className="mr-2" />
-                )}
+                {loading && <LoaderCircle className="animate-spin" />}
                 {initialData ? "Update" : "Add"} Promo Code
               </Button>
             </DialogFooter>

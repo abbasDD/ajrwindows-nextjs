@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { MessageSquarePlus, Folder, Plus, Edit } from "lucide-react";
+import { MessageSquarePlus, Folder, Edit } from "lucide-react";
 import { useGetData } from "@/hooks/use-get-data";
 import { useDeleteOne } from "@/hooks/use-delete-data";
 import { toast } from "sonner";
@@ -75,7 +75,7 @@ const ProductFAQManager = ({ productId }: { productId: string }) => {
               variant={"secondary"}
               onClick={() => setOpen(true)}
             >
-              <Plus className="h-4 w-4" /> Add FAQ
+              Add FAQ
             </Button>
           </div>
 
